@@ -10,8 +10,12 @@
 	<artifactId>PaymitServer</artifactId>
 
 	<packaging>war</packaging>
+
+	<properties>
+		<m2eclipse.wtp.contextRoot>/paymit</m2eclipse.wtp.contextRoot>
+	</properties>
 	
 	<build>
-		<finalName>PaymitServer</finalName>
+		<finalName>paymit</finalName>
 	</build>
 </project>
