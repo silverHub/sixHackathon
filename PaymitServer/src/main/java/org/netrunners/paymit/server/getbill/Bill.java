@@ -1,40 +1,43 @@
-package org.netrunners.paymit.server.bill;
+package org.netrunners.paymit.server.getbill;
 
-import java.util.Date;
 import java.util.List;
 
 public class Bill {
 
 	private String billId;
-	private String owner;
+	private String ownerId;
 	private String createdTimestamp;
-	private List<BillItem> content;
-	
+	private List<BillItem> billItems;
+
 	public String getBillId() {
 		return billId;
 	}
+
 	public void setBillId(String billId) {
 		this.billId = billId;
 	}
-	public String getOwner() {
-		return owner;
+
+	public String getOwnerId() {
+		return ownerId;
 	}
+
 	public void setOwnerId(String owner) {
-		this.owner = owner;
+		this.ownerId = owner;
 	}
+
 	public String getCreatedTimestamp() {
 		return createdTimestamp;
 	}
+
 	public void setCreatedTimestamp(String createdTimestamp) {
 		this.createdTimestamp = createdTimestamp;
 	}
-	public List<BillItem> getContent() {
-		return content;
+
+	public List<BillItem> getBillItems() {
+		return billItems;
 	}
-	public void setContent(List<BillItem> content) {
-		this.content = content;
+
+	public void setBillItems(List<BillItem> billItems) {
+		this.billItems = billItems;
 	}
-	
-	
-	
 }

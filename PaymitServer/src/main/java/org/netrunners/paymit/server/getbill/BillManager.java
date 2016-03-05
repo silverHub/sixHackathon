@@ -1,4 +1,4 @@
-package org.netrunners.paymit.server.bill;
+package org.netrunners.paymit.server.getbill;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,8 +39,8 @@ public class BillManager implements InitializingBean {
 					}
 				});
 
-		List<BillItem> rawHistoryItems = jdbcTemplate.query(SQL, new Object[] { billId }, new BillItemRowMapper());
-		bill.setContent(rawHistoryItems);
+		List<BillItem> billItems = jdbcTemplate.query(SQL, new Object[] { billId }, new BillItemRowMapper());
+		bill.setBillItems(billItems);
 		return bill;
 
 	}

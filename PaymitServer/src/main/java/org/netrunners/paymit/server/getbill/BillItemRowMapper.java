@@ -1,12 +1,11 @@
-package org.netrunners.paymit.server.bill;
+package org.netrunners.paymit.server.getbill;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 
-public class BillItemRowMapper implements RowMapper<BillItem>  {
+public class BillItemRowMapper implements RowMapper<BillItem> {
 
 	public BillItem mapRow(ResultSet rs, int rowNum) throws SQLException {
 		BillItem item = new BillItem();
