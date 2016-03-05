@@ -3,13 +3,23 @@
 angular.module('clientapp.factories', [])
     .factory('Socket', SocketFactory)
     .factory('QRFactory', QRFactory)
+    .factory('Urls', Urls)
 	.factory('AppIdentifier',AppIdentifier);
+
+
+Urls.$inject=[];
+function Urls() {
+  return {
+    billUrl : 'mocks/getBillDetails.json',
+    setBillOwner: '/setBillOwner.json'
+  };
+}
 
 AppIdentifier.$inject=[];
 function AppIdentifier() {
 	// get the phone number
 
-	var id = null;
+	var id = '+41789646592';
 
 	function getId() {
 		return id;
@@ -32,7 +42,7 @@ function SocketFactory($log) {
   var socket = io.connect();
   return {
     on: function (eventName, callback) {
-      socket.on(eventName, function () {  
+      socket.on(eventName, function () {
         var args = arguments;
         $rootScope.$apply(function () {
           callback.apply(socket, args);
@@ -54,19 +64,16 @@ function SocketFactory($log) {
 }
 
 
-QRFactory.$inject=['$cordovaBarcodeScanner', '$log', '$http', 'ips', '$q'];
-function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q) {
-
+QRFactory.$inject=['$cordovaBarcodeScanner', '$log', '$http', 'ips', '$q','Urls'];
+function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
     function getProviderData(input) {
 
         var defer = $q.defer();
 
         //$http.get('http://'+ips.backend+'/backend/getProviderInfo.json?providerId='+input)
         // TODO add the mock json here
-        $http.get('http://'+ips.backend+'/backend/getProviderInfo.json?providerId='+input)
+        $http.get(Urls.billUrl)
           .then(function(response){
-            // TODO: set state 
-              response.data.pid = input;
               defer.resolve(response);
           })
           .catch(function(err){
@@ -80,6 +87,9 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q) {
         return $cordovaBarcodeScanner.scan()
             .then(function(qrdata) {
               return getProviderData(qrdata.text);
+            })
+            .catch(function(err){
+
             });
     }
 
@@ -88,4 +98,3 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q) {
     getQR: getQR
   }
 }
-
