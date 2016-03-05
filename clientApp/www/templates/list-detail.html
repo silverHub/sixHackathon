@@ -1,8 +1,10 @@
-<ion-view view-title="Mr. Yo">
+<ion-view view-title="Invoice #{{invoice.bill.billId}}">
   <!-- do you want padding -->
   <ion-content class="padding">
 
     {{invoice | json}}
+
+    <button ng-if="invoice.isPrimary" class="button button-block button-stable shareIt" ng-click="shareIt()"></button>
 
   </ion-content>
 </ion-view>

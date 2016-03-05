@@ -67,7 +67,8 @@ angular.module('clientapp', ['ionic','ngCordova'])
 
   .config(function($ionicConfigProvider) {
       $ionicConfigProvider.views.maxCache(5);
-      $ionicConfigProvider.backButton.text('').icon('ion-ios-arrow-left');
+      $ionicConfigProvider.backButton.text('Back').icon('ion-chevron-left');
+      $ionicConfigProvider.backButton.previousTitleText(false);
     })
 
   .config(function($stateProvider, $urlRouterProvider) {
@@ -95,6 +96,15 @@ angular.module('clientapp', ['ionic','ngCordova'])
             'menuContent': {
               templateUrl: 'templates/list-detail.html',
               controller: 'DetailsCtrl'
+            }
+          }
+        })
+        .state('main.sharewith', {
+          url: '/base/sarewith',
+          views: {
+            'menuContent': {
+              templateUrl: 'templates/shareWith.html',
+              controller: 'ShareWithCtrl'
             }
           }
         });
