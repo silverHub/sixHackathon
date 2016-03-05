@@ -1,3 +1,4 @@
+drop table t_payments;
 drop table t_billitems;
 drop table t_bill;
 
@@ -16,5 +17,14 @@ create table t_billitems
 	itemName			varchar(256) not null,
 	quantity			numeric(15,2) not null,
 	price				numeric(15,2) not null,
-	totalPrice			numeric(15,2) not null
+	totalPrice			numeric(15,2) not null,
+	paidAmount			numeric(15,2) not null
+);
+
+create table t_payments
+(
+	itemId				varchar(20), FOREIGN KEY (itemId) REFERENCES t_billitems (itemId) ON UPDATE CASCADE ON DELETE RESTRICT,
+	clientId			varchar(256) not null,
+	quantity			numeric(15,2) not null,
+	createdTimestamp	timestamp DEFAULT CURRENT_TIMESTAMP
 );
