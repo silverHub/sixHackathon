@@ -134,6 +134,10 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,App
     } else {
       $scope.consumption.splice(index,1);
     }
+
+    if(!$scope.consumption.length) {
+      $scope.modal.hide();
+    }
   }
 
   $scope.$on('$destroy', function() {
@@ -158,15 +162,10 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,App
 ShareWithCtrl.$inject=['Urls','SocketFactory','$scope','$timeout', '$stateParams','$rootScope'];
 function ShareWithCtrl(Urls, SocketFactory, $scope, $timeout, $stateParams, $rootScope) {
 
-  $rootScope.homescreen = false;
-  $rootScope.listscreen = false;
-
-
   // Magic happens here but now its just mock
   $scope.navTitle='<img class="title-image" src="img/shareit_sm.png" style="margin-top: 7px;"/>';
   $scope.invoice = $stateParams.bill;
   $scope.shareWith = function(id) {
-    console.log($stateParams.bill);
     SocketFactory.emit('shareBillWithUser', $scope.invoice.bill.billId, function(){
       showBill(true)
     });

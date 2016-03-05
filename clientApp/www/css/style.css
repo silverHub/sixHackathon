@@ -267,7 +267,7 @@ body .pane {
   margin-top: 10px;
 }
 
-.closeModal {
+.bar .title + .buttons.closeModal {
   position: absolute;
   top: 5px;
   right: 15px;
