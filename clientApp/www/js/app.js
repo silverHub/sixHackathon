@@ -10,7 +10,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
   .factory('AppIdentifier', function AppIdentifier() {
     // get the phone number
 
-    var id = null;
+    var id = '+41789646592';
 
     var phoneNumberMap = {
       216: '+36304244773',

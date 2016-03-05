@@ -25,14 +25,14 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 
   function processInvoice(invoice) {
         $scope.invoice = invoice.data;
-
+        console.log(AppIdentifier.getId());
         if(!invoice.data.primaryId) {
 
           $cordovaDialogs.confirm('', 'Do you want to be the owner of this invoice?', ['Yes','No'])
             .then(function(index) {
               // no button = 0, 'OK' = 1, 'Cancel' = 2
               if (index===1) {
-                $http.post(Urls.setBillOwner,{billId: invoice.data.billId, clientId : AppIdentifier.getId()})
+                $http.post(Urls.setBillOwner,{billId: invoice.data.bill.billId, clientId : AppIdentifier.getId()})
                    .then(function(){
                       showBill(true);
                    });
