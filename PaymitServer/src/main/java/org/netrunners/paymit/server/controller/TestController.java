@@ -1,15 +1,19 @@
 package org.netrunners.paymit.server.controller;
 
-import org.springframework.stereotype.Controller;
+import org.netrunners.paymit.server.Test.Test;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class TestController {
 
-	@RequestMapping(value = "/test.html")
+	@RequestMapping(value = "/test.json")
 	@ResponseBody
-	public String test() {
-		return "test";
+	public Test test() {
+		Test test = new Test();
+		test.setName("apple");
+		test.setPrice(14.5);
+		return test;
 	}
 }
