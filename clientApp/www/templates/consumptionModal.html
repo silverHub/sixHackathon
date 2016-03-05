@@ -1,0 +1,22 @@
+
+    <ion-header-bar class="bar bar-assertive">
+    <div class="buttons" ng-click="reset()">
+      <button class="button">RESET</button>
+    </div>
+      <h1 class="title">My consumption</h1>
+      <div class="buttons" ng-click="closeModal()">
+        <button class="button">CLOSE</button>
+      </div>
+    </ion-header-bar>
+    <ion-content>
+    <div class="consumption">
+      {{consumption}}
+      <ul class="list">
+        <li class="item" data-ng-repeat="item in consumption">
+          {{item.name}}
+        </li>
+      </ul>
+    </div>
+    <button class="button button-full button-balanced" data-ng-click="pay()"> PAY </button>
+    </ion-content>
+  </ion-modal-view>

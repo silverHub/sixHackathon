@@ -3,13 +3,18 @@
   <ion-content class="padding">
 
     <div class="card" data-ng-repeat="item in invoice.bill.billItems">
-      <div class="item item-text-wrap">
+      <div class="item item-text-wrap"  on-swipe-right="addToConsumption(item)">
         <span>{{item.itemName}}</span>
         <span>{{item.quantity}}</span>
         <span>{{item.price}}</span>
+        {{item}}
       </div>
     </div>
-    {{invoice | json}}
-
   </ion-content>
+
+  <div class="bar bar-positive bar-footer">
+    <div class="buttons">
+      <h1 class="title" data-ng-click="openModal()">Show my consumption</h1>
+    </div>
+</div>
 </ion-view>

@@ -56,9 +56,9 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
     };
 
       $ionicPlatform.ready(function () {
-    
+
     // ========== Scheduling
-    
+
     $scope.scheduleSingleNotification = function () {
       $cordovaLocalNotification.schedule({
         id: 1,
@@ -69,7 +69,7 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
         // ...
       });
     };
-    
+
     $scope.scheduleMultipleNotifications = function () {
       $cordovaLocalNotification.schedule([
         {
@@ -100,11 +100,11 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
         // ...
       });
     };
-    
+
     $scope.scheduleDelayedNotification = function () {
       var now = new Date().getTime();
       var _1SecondsFromNow = new Date(now + 1 * 1000);
-      
+
       $cordovaLocalNotification.schedule({
         id: 1,
         title: 'Title here',
@@ -114,7 +114,7 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
         // ...
       });
     };
-    
+
     $scope.scheduleEveryMinuteNotification = function () {
       $cordovaLocalNotification.schedule({
         id: 1,
@@ -125,11 +125,11 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
         // ...
       });
     };
-    
+
     // =========/ Scheduling
-    
+
     // ========== Update
-    
+
     $scope.updateSingleNotification = function () {
       $cordovaLocalNotification.update({
         id: 1,
@@ -139,7 +139,7 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
         // ...
       });
     };
-    
+
     $scope.updateMultipleNotifications = function () {
       $cordovaLocalNotification.update([
         {
@@ -161,82 +161,106 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
         // ...
       });
     };
-    
+
     // =========/ Update
-    
+
     // ========== Cancelation
-    
+
     $scope.cancelSingleNotification = function () {
       $cordovaLocalNotification.cancel(1).then(function (result) {
         // ...
       });
     };
-    
+
     $scope.cancelMultipleNotifications = function () {
       $cordovaLocalNotification.cancel([1, 2]).then(function (result) {
         // ...
       });
     };
-    
+
     $scope.cancelAllNotifications = function () {
       $cordovaLocalNotification.cancelAll().then(function (result) {
         // ...
       });
     };
-    
+
     // =========/ Cancelation
-    
+
     // ========== Events
-    
+
     $rootScope.$on('$cordovaLocalNotification:schedule',
     function (event, notification, state) {
       // ...
     });
-    
+
     $rootScope.$on('$cordovaLocalNotification:trigger',
     function (event, notification, state) {
       // ...
     });
-    
+
     $rootScope.$on('$cordovaLocalNotification:update',
     function (event, notification, state) {
       // ...
     });
-    
+
     $rootScope.$on('$cordovaLocalNotification:clear',
     function (event, notification, state) {
       // ...
     });
-    
+
     $rootScope.$on('$cordovaLocalNotification:clearall',
     function (event, state) {
       // ...
     });
-    
+
     $rootScope.$on('$cordovaLocalNotification:cancel',
     function (event, notification, state) {
       // ...
     });
-    
+
     $rootScope.$on('$cordovaLocalNotification:cancelall',
     function (event, state) {
       // ...
     });
-    
+
     $rootScope.$on('$cordovaLocalNotification:click',
     function (event, notification, state) {
       // ...
     });
-    
+
     // =========/ Events
-    
+
   });
-  
+
 
 }
 
-DetailsCtrl.$inject=['$stateParams','$scope'];
-function DetailsCtrl($stateParams, $scope) {
+DetailsCtrl.$inject=['$stateParams','$scope','$ionicModal'];
+function DetailsCtrl($stateParams, $scope, $ionicModal) {
   $scope.invoice = $stateParams.bill;
+  $scope.consumption = [];
+
+  $ionicModal.fromTemplateUrl('templates/consumptionModal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+$scope.reset = function reset() {
+  $scope.consumption = [];
+}
+$scope.openModal = function openModal(e) {
+  $scope.modal.show(e);
+}
+$scope.pay = function pay() {
+  console.log('pay');
+}
+$scope.closeModal = function() {
+  $scope.modal.hide();
+}
+$scope.addToConsumption = function addToConsumption(item) {
+  $scope.consumption.push(item.name);
 }
 
+}

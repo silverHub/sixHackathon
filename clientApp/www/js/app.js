@@ -1,13 +1,11 @@
 'use strict';
 
-var ipAddresses = {
-  backend: 'http://172.16.54.224​:8080',
-  notification: 'http://172.20.10.7:3000'
-};
-
 
 angular.module('clientapp', ['ionic','ngCordova'])
-  .value('ips',ipAddresses)
+  .value('ips',{
+    backend: 'http://172.27.0.220​:8080',
+    notification: 'http://172.27.0.220:3000'
+  })
 
   .factory('AppIdentifier', function AppIdentifier() {
     // get the phone number
@@ -38,7 +36,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
 
-    
+
       function successCallback(result) {
         AppIdentifier.setId(result.mcc);
       }
@@ -52,7 +50,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
       }
 
       if (window.cordova && window.cordova.plugins.Keyboard) {
-        
+
 
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
