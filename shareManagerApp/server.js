@@ -83,11 +83,24 @@ io.on('connect', function(socket){
                   }
     });
   });
-  socket.on('msg', function(data){
-    console.log(socket.id,'msg arrived', data);
-    data = data || {};
-    data.id = socket.id;
-    socket.broadcast.emit('echo', data);
+  socket.on('payItems', function(data){
+    console.log('/payItems event', data);
+    request.post({
+                  url: host + '/paymit/pay.json',
+                  json: true,
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  body: data
+                },
+                function handleResponse(error, response, body){
+                  console.log('/payItems response', error, body);
+                  if(!error && body && body.status === 'OK'){
+                    socket.broadcast.emit('payItems', body);
+                  } else {
+                    console.log('Error happened');
+                  }
+    });
   });
 
 });

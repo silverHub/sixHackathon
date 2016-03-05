@@ -69,8 +69,8 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 }
 
 
-DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal', '$rootScope','SocketFactory'];
-function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,SocketFactory) {
+DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal', '$rootScope','SocketFactory','AppIdentifier'];
+function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,SocketFactory,AppIdentifier) {
 
   $rootScope.homescreen = false;
 
@@ -110,14 +110,15 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
     $scope.modal.show();
   }
   $scope.pay = function pay() {
-    // var data = {
-    //   billId: ,
-    //   clientId:
-    // };
-    // {"billId":"123456789",
-    //  "clientId":"123456789",
-    //  "items":[{"itemId":"123456789-2", "quantity":2}, {"itemId":"123456789-3", "quantity":100}]}
-    SocketFactory.emit('payItems');
+    var data = {
+      billId: $scope.invoice.bill.billId,
+      clientId: AppIdentifier.getId(),
+      items: $scope.consumption.map(function(item) {
+         return {itemId : item.itemId, quantity : item.quantity};
+      })
+    };
+    console.log(data);
+    SocketFactory.emit('payItems',data);
   }
   $scope.closeModal = function closeModal() {
     $scope.modal.hide();
