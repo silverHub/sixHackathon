@@ -77,14 +77,14 @@ angular.module('clientapp', ['ionic','ngCordova'])
         .state('main', {
           url: '/main',
           abstract: true,
-          templateUrl: 'templates/tabs.html'
+          templateUrl: 'templates/menu.html',
+          controller: 'AppCtrl'
         })
         .state('main.base', {
           url: '/base',
           views: {
-            'tab-list': {
+            'menuContent': {
               templateUrl: 'templates/base.html',
-              controller: 'AppCtrl'
             }
           }
         })
@@ -92,7 +92,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
           url: '/base/detail',
           params: {bill: null},
           views: {
-            'tab-list': {
+            'menuContent': {
               templateUrl: 'templates/list-detail.html',
               controller: 'DetailsCtrl'
             }
