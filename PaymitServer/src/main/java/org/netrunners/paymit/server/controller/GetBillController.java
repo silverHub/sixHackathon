@@ -1,7 +1,7 @@
 package org.netrunners.paymit.server.controller;
 
 import org.netrunners.paymit.server.getbill.Bill;
-import org.netrunners.paymit.server.getbill.BillManager;
+import org.netrunners.paymit.server.getbill.GetBillManager;
 import org.netrunners.paymit.server.getbill.GetBillException;
 import org.netrunners.paymit.server.getbill.GetBillRequest;
 import org.netrunners.paymit.server.getbill.GetBillResponse;
@@ -20,7 +20,7 @@ public class GetBillController {
 	private Logger logger = LoggerFactory.getLogger(GetBillController.class);
 
 	@Autowired
-	private BillManager billManager;
+	private GetBillManager billManager;
 
 	@RequestMapping(value = "/getBill.json", method = RequestMethod.POST)
 	@ResponseBody

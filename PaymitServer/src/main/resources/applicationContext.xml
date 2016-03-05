@@ -7,7 +7,7 @@
  http://www.springframework.org/schema/context
  http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<bean id="billManager" class="org.netrunners.paymit.server.getbill.BillManager">
+	<bean id="billManager" class="org.netrunners.paymit.server.getbill.GetBillManager">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 

@@ -14,8 +14,7 @@ public class SetBillOwnerManager extends JdbcDaoSupport {
 		this.transactionManager = txManager;
 	}
 
-	public void setBillOwner(String ownerId, String billId)
-			throws SetBillOwnerException {
+	public void setBillOwner(String ownerId, String billId) throws SetBillOwnerException {
 		TransactionDefinition txDef = new DefaultTransactionDefinition();
 		TransactionStatus txStatus = transactionManager.getTransaction(txDef);
 		try {
@@ -25,17 +24,13 @@ public class SetBillOwnerManager extends JdbcDaoSupport {
 			transactionManager.rollback(txStatus);
 			throw e;
 		}
-
 	}
 
-	public void doSetBillOwner(String ownerId, String billId)
-			throws SetBillOwnerException {
-		int updated = getJdbcTemplate()
-				.update("UPDATE t_bill SET ownerId = ? WHERE billId = ? AND ownerId IS NULL",
-						new Object[] { ownerId, billId });
+	public void doSetBillOwner(String ownerId, String billId) throws SetBillOwnerException {
+		int updated = getJdbcTemplate().update("UPDATE t_bill SET ownerId = ? WHERE billId = ? AND ownerId IS NULL",
+				new Object[] { ownerId, billId });
 		if (updated != 1)
-			throw new SetBillOwnerException("No bill is available with "
-					+ billId
-					+ " bill identifier or it is already owned by someone");
+			throw new SetBillOwnerException(
+					"No bill is available with " + billId + " bill identifier or it is already owned by someone");
 	}
 }
