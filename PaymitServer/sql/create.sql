@@ -4,7 +4,7 @@ drop table t_bill;
 create table t_bill
 (
 	billId				varchar(20) primary key,
-	primaryId			varchar(256),
+	ownerId				varchar(256),
     state               char(1),
     createdTimestamp	timestamp DEFAULT CURRENT_TIMESTAMP
 );

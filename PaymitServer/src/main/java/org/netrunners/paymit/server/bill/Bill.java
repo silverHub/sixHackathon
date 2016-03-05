@@ -19,7 +19,7 @@ public class Bill {
 	public String getOwner() {
 		return owner;
 	}
-	public void setOwner(String owner) {
+	public void setOwnerId(String owner) {
 		this.owner = owner;
 	}
 	public String getCreatedTimestamp() {
