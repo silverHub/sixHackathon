@@ -5,7 +5,8 @@ var io = require('socket.io')(http);
 cors = require('cors');
 var request = require('request');
 var bodyParser = require('body-parser');
-const host = 'http://172.27.0.182:8080';
+const host = 'http://netrunnersserver.eu-gb.mybluemix.net';
+const contextroot = ''
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -18,7 +19,7 @@ app.get('/getBill/:billId', function(req, res){
   var billId = req.params.billId;
   console.log('/getBill request', billId);
   request.post({
-                url: host + '/paymit/getBill.json',
+                url: host + contextroot + '/getBill.json',
                 json: true,
                 headers: {
                   "content-type": "application/json",
@@ -40,7 +41,7 @@ app.post('/setBillOwner', function(req, res){
   var body = req.body;
   console.log('/setBillOwner request arrived', body);
   request.post({
-                url: host + '/paymit/setBillOwner.json',
+                url: host + contextroot + '/setBillOwner.json',
                 json: true,
                 headers: {
                   "content-type": "application/json",

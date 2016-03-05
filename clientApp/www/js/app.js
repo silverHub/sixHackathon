@@ -3,8 +3,7 @@
 
 angular.module('clientapp', ['ionic','ngCordova'])
   .value('ips',{
-    backend: 'http://172.27.0.220​:8080',
-    notification: 'http://172.27.0.220:3000'
+    notification: 'http://127.0.0.1:3000'
   })
 
   .factory('AppIdentifier', function AppIdentifier() {
