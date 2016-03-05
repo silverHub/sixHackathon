@@ -1,4 +1,4 @@
-package org.netrunners.paymit.server.dao;
+package org.netrunners.paymit.server.bill;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,7 @@ public class Bill {
 
 	private String billId;
 	private String owner;
-	private Date createdTimestamp;
+	private String createdTimestamp;
 	private List<BillItem> content;
 	
 	public String getBillId() {
@@ -22,10 +22,10 @@ public class Bill {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-	public Date getCreatedTimestamp() {
+	public String getCreatedTimestamp() {
 		return createdTimestamp;
 	}
-	public void setCreatedTimestamp(Date createdTimestamp) {
+	public void setCreatedTimestamp(String createdTimestamp) {
 		this.createdTimestamp = createdTimestamp;
 	}
 	public List<BillItem> getContent() {

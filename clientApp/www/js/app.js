@@ -9,11 +9,50 @@ var ipAddresses = {
 angular.module('clientapp', ['ionic', 'ngCordova', 'clientapp.controllers', 'clientapp.factories'])
   .value('ips',ipAddresses)
 
-  .run(function($ionicPlatform) {
+  .factory('AppIdentifier', function AppIdentifier() {
+    // get the phone number
+
+    var id = null;
+
+    var phoneNumberMap = {
+      216: '+36304244773',
+      228: '+41789646592'
+    };
+
+    function getId() {
+      return id;
+    }
+
+    function setId(no) {
+      id = phoneNumberMap[no];
+    }
+
+    return {
+      getId: getId,
+      setId: setId
+    };
+  })
+
+  .run(function($ionicPlatform, AppIdentifier) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
+
+      function successCallback(result) {
+        AppIdentifier.setId(result.mcc);
+      }
+
+      function errorCallback(error) {
+        alert(angular.toJson(error));
+      }
+
+      if (window.plugins && window.plugins.sim) {
+          window.plugins.sim.getSimInfo(successCallback, errorCallback);
+      }
+
       if (window.cordova && window.cordova.plugins.Keyboard) {
+        
+
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
 
