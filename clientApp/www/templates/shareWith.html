@@ -1,0 +1,22 @@
+<ion-view view-title="Pick your contacts">
+  <!-- do you want padding -->
+  <ion-content class="padding sharewith">
+
+  	<div class="list">
+
+    <a class="item item-avatar" ng-repeat="user in users" href="#">
+      <img ng-src="{{user.image}}">
+      <h2>{{user.name}}</h2>
+      <p>{{user.id}}</p>
+    </a>
+  	</div>
+  	<div ng-if="!laoadingStart">
+    	<div class="wifi-symbol">
+		  <div class="wifi-circle first"></div>
+		  <div class="wifi-circle second"></div>
+		  <div class="wifi-circle third"></div>	
+		  <div class="wifi-circle fourth">
+		</div>
+	</div>
+  </ion-content>
+</ion-view>
