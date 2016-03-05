@@ -1,4 +1,4 @@
-package org.netrunners.paymit.server.dao;
+package org.netrunners.paymit.server.bill;
 
 import java.math.BigDecimal;
 
