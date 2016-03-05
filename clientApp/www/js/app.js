@@ -65,7 +65,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
 
   .config(function($ionicConfigProvider) {
       $ionicConfigProvider.views.maxCache(5);
-      $ionicConfigProvider.backButton.text('Back').icon('ion-chevron-left');
+      $ionicConfigProvider.backButton.text('Back').icon('ion-ios-arrow-left');
       $ionicConfigProvider.backButton.previousTitleText(false);
     })
 
