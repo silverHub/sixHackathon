@@ -4,19 +4,61 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 cors = require('cors');
 var request = require('request');
+var bodyParser = require('body-parser');
+const host = 'http://172.27.0.182:8080';
 
+app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/',function(req,res){
      res.sendFile(__dirname + '/test.html');
 });
 
-app.get('/getBillDetails/*', function(req, res){
-  res.send({"bill":{"billId":"123456789","ownerId":null,"createdTimestamp":"2016.03.05 04:03:31","billItems":[{"itemId":"123456789-1","itemName":"Hawaii pizza","quantity":2.00,"price":8.00,"totalPrice":16.00},{"itemId":"123456789-2","itemName":"Duff beer","quantity":6.00,"price":1.50,"totalPrice":9.00},{"itemId":"123456789-3","itemName":"Some dessert","quantity":1.00,"price":4.50,"totalPrice":4.50}]}})
+app.get('/getBill/:billId', function(req, res){
+  var billId = req.params.billId;
+  console.log('/getBill request', billId);
+  request.post({
+                url: host + '/paymit/getBill.json',
+                json: true,
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: { "billId" : billId }
+              },
+              function handleResponse(error, response, body){
+                console.log('/getBill response', error, body);
+                if(!error && body && body.status === 'OK'){
+                  res.send(body);
+                } else {
+                  console.log('Error happened');
+                  res.send(error);
+                }
+  });
 });
 
 app.post('/setBillOwner', function(req, res){
-  res.send("Ack");
+  var body = req.body;
+  console.log('/setBillOwner request arrived', body);
+  request.post({
+                url: host + '/paymit/setBillOwner.json',
+                json: true,
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: body
+              },
+              function handleResponse(error, response, body){
+                console.log('/SetBillOwner response arrived',error, body);
+                if(!error && body && body.status === 'OK'){
+                  res.send(body);
+                } else {
+                  console.log('Error happened');
+                  res.send(error);
+                }
+              });
+
+
+
 });
 
 
