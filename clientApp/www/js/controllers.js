@@ -20,8 +20,17 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
-  SocketFactory.on('sendBill', function(data){
-      $state.go('main.listDetail', {bill: data});
+  SocketFactory.on('sendBill', function(bill){
+      $state.go('main.listDetail', {bill: bill});
+      console.log(bill);
+      SocketFactory.on('payItems', function(payedItems){
+        console.log(payedItems);
+        payedItems.map(function(item) {
+          var billItem = bill.contains(item);
+          billItem.quantity -= item.quantity;
+        });
+      });
+
   });
 
   $scope.shareIt = function() {
@@ -69,10 +78,8 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 }
 
 
-DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal', '$rootScope','SocketFactory','AppIdentifier'];
-function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,SocketFactory,AppIdentifier) {
-
-  $rootScope.homescreen = false;
+DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal','SocketFactory','AppIdentifier'];
+function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,AppIdentifier) {
 
   $scope.invoice = $stateParams.bill;
   Array.prototype.contains = function findById(itemToFind) {
@@ -86,10 +93,6 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
     }
   }
   $scope.consumption = [];
-
-  $scope.toggleDetails = function(item) {
-    item.opened = !item.opened; 
-  };
 
   $ionicModal.fromTemplateUrl('templates/consumptionModal.html', {
     scope: $scope,
@@ -117,7 +120,6 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
          return {itemId : item.itemId, quantity : item.quantity};
       })
     };
-    console.log(data);
     SocketFactory.emit('payItems',data);
   }
   $scope.closeModal = function closeModal() {
@@ -140,9 +142,8 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
 
   $scope.addToConsumption = function addToConsumption(item) {
     if(item.quantity > 0){
-      item.quantity--;
       var match = $scope.consumption.contains(item);
-      
+      item.quantity--;
       if(match){
         match.quantity++;
       } else {
@@ -150,7 +151,7 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
         consumedItem.quantity = 1;
         $scope.consumption.push(consumedItem);
       }
-    }
+  }
   }
 }
 

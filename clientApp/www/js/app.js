@@ -87,7 +87,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
               templateUrl: 'templates/base.html',
               controller: 'HomeCtrl'
             }
-          } 
+          }
         })
         .state('main.listDetail', {
           url: '/base/detail',
@@ -133,16 +133,15 @@ angular.module('clientapp', ['ionic','ngCordova'])
                     content.style[ionic.CSS.TRANSITION] = 'all ease-out .25s';
 
                     if (!buttons.classList.contains('invisible')) {
-                        console.log('close');
                         content.style[ionic.CSS.TRANSFORM] = '';
                         setTimeout(function() {
                             buttons.classList.add('invisible');
-                        }, 250);                
+                        }, 250);
                     } else {
                         buttons.classList.remove('invisible');
                         content.style[ionic.CSS.TRANSFORM] = 'translate3d(-' + buttonsWidth + 'px, 0, 0)';
                     }
-                });     
+                });
 
             }, element);
         }
