@@ -1,14 +1,20 @@
 'use strict';
 
 angular.module('clientapp')
-  .controller('AppCtrl', AppCtrl);
+  .controller('AppCtrl', AppCtrl)
+  .controller('DetailsCtrl', DetailsCtrl);
 
-AppCtrl.$inject=['QRFactory','SocketFactory','$ionicPopup','Urls','AppIdentifier','$http','$scope', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification'];
-function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $http, $scope, $rootScope, $ionicPlatform, $cordovaLocalNotification) {
+AppCtrl.$inject=['QRFactory','SocketFactory','$ionicPopup','Urls','AppIdentifier','$http','$scope', '$state', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification'];
+function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $http, $scope, $state, $rootScope, $ionicPlatform, $cordovaLocalNotification) {
 
-  SocketFactory.on('echo', function(socket, data){
-      $scope.scheduleDelayedNotification();
+  SocketFactory.on('echo', function(data){
+      $scope.notif = data;
   });
+
+  function showBill(isPrimary){
+    $scope.invoice.isPrimary = isPrimary;
+    $state.go('main.listDetail', {bill: $scope.invoice});
+  }
 
   function processInvoice(invoice) {
         $scope.invoice = invoice.data;
@@ -21,21 +27,23 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
                 { text: 'No',
                   type: 'button-assertive',
                   onTap: function(e) {
-                    // No action to the server
+                    showBill(false);
                   }
                 },
                 {
                   text: '<b>Yes</b>',
-                  type: 'button-positive',
+                  type: 'button-success',
                   onTap: function(e) {
-                    $http.post(Urls.setBillOwner,{billId: invoice.data.billId,
-                                                clientId : AppIdentifier.getId()});
+                    $http.post(Urls.setBillOwner,{billId: invoice.data.billId, clientId : AppIdentifier.getId()})
+                      .then(function(){
+                        showBill(true)
+                      });
                   }
                 }
               ]
           });
         } else {
-          alert('show bill');
+          showBill(false);
         }
     }
 
@@ -225,5 +233,10 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
   });
   
 
+}
+
+DetailsCtrl.$inject=['$stateParams','$scope'];
+function DetailsCtrl($stateParams, $scope) {
+  $scope.invoice = $stateParams.bill;
 }
 

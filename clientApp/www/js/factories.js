@@ -3,36 +3,15 @@
 angular.module('clientapp')
   .factory('SocketFactory', SocketFactory)
   .factory('QRFactory', QRFactory)
-  .factory('Urls', Urls)
-	.factory('AppIdentifier',AppIdentifier);
+  .factory('Urls', Urls);
 
 
-Urls.$inject=[];
-function Urls() {
+Urls.$inject=['ips'];
+function Urls(ips) {
   return {
-    billUrl : 'mocks/getBillDetailsNoPrimary.json',
-    setBillOwner: '/setBillOwner.json'
+    billUrl : ips.notification+'/getBillDetails',
+    setBillOwner: ips.notification+'/setBillOwner'
   };
-}
-
-AppIdentifier.$inject=[];
-function AppIdentifier() {
-	// get the phone number
-
-	var id = '+41789646592';
-
-	function getId() {
-		return id;
-	}
-
-	function setId(no) {
-		id = no;
-	}
-
-	return {
-		getId: getId,
-		setId: setId
-	};
 }
 
 
@@ -66,13 +45,13 @@ function SocketFactory($log,ips,$rootScope) {
 
 QRFactory.$inject=['$cordovaBarcodeScanner', '$log', '$http', 'ips', '$q','Urls'];
 function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
-    function getProviderData(input) {
+    function getBillData(input) {
 
         var defer = $q.defer();
 
         //$http.get('http://'+ips.backend+'/backend/getProviderInfo.json?providerId='+input)
         // TODO add the mock json here
-        $http.get(Urls.billUrl)
+        $http.get(Urls.billUrl+'/'+input)
           .then(function(response){
               defer.resolve(response);
           })
@@ -84,7 +63,7 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
     }
 
     function getQR(){
-      return getProviderData('mock');
+      return getBillData('123456789');
 
       //  return $cordovaBarcodeScanner.scan()
     //         .then(function(qrdata) {
@@ -96,7 +75,6 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
     }
 
   return {
-    getProviderData:getProviderData,
     getQR: getQR
   }
 }

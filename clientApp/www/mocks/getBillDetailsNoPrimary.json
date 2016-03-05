@@ -1,11 +1,26 @@
 {
-"billId": "1234567890",
-"createdTimestamp": "2016.03.05 12:12:12",
-"content": [{
-    "itemId": "1234567890-001",
-    "itemName": "pizza",
-    "quantity": "1",
-    "price": "7.50",
-    "totalPrice": "7.50"
-}]
+	"bill": {
+		"billId": "123456789",
+		"ownerId": null,
+		"createdTimestamp": "2016.03.05 04:03:31",
+		"billItems": [{
+			"itemId": "123456789-1",
+			"itemName": "Hawaii pizza",
+			"quantity": 2.00,
+			"price": 8.00,
+			"totalPrice": 16.00
+		}, {
+			"itemId": "123456789-2",
+			"itemName": "Duff beer",
+			"quantity": 6.00,
+			"price": 1.50,
+			"totalPrice": 9.00
+		}, {
+			"itemId": "123456789-3",
+			"itemName": "Some dessert",
+			"quantity": 1.00,
+			"price": 4.50,
+			"totalPrice": 4.50
+		}]
+	}
 }

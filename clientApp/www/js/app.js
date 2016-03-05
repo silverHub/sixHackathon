@@ -6,7 +6,7 @@ var ipAddresses = {
 };
 
 
-angular.module('clientapp', ['ionic', 'ngCordova'])
+angular.module('clientapp', ['ionic','ngCordova'])
   .value('ips',ipAddresses)
 
   .factory('AppIdentifier', function AppIdentifier() {
@@ -38,6 +38,7 @@ angular.module('clientapp', ['ionic', 'ngCordova'])
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
 
+    
       function successCallback(result) {
         AppIdentifier.setId(result.mcc);
       }
@@ -89,10 +90,11 @@ angular.module('clientapp', ['ionic', 'ngCordova'])
         })
         .state('main.listDetail', {
           url: '/base/detail',
+          params: {bill: null},
           views: {
             'tab-list': {
               templateUrl: 'templates/list-detail.html',
-              controller: 'DetailCtrl'
+              controller: 'DetailsCtrl'
             }
           }
         });
