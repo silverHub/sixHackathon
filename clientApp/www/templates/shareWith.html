@@ -2,15 +2,16 @@
   <!-- do you want padding -->
   <ion-content class="padding sharewith">
 
-  	<div class="list">
+  	<ion-list>
 
-    <a class="item item-avatar" ng-repeat="user in users" href="#">
+    <ion-item class="item-avatar" ng-repeat="user in users" href="#" click-for-options>
       <img ng-src="{{user.image}}">
       <h2>{{user.name}}</h2>
       <p>{{user.id}}</p>
-    </a>
-  	</div>
-  	<div ng-if="!laoadingStart">
+      <ion-option-button class="button-positive">Share</ion-option-button>
+    </ion-item>
+  	</ion-list>
+  	<div ng-if="loadingStart">
     	<div class="wifi-symbol">
 		  <div class="wifi-circle first"></div>
 		  <div class="wifi-circle second"></div>
