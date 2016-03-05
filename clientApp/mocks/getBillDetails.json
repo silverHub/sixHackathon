@@ -1,0 +1,12 @@
+{
+	"billId": "1234567890",
+	"primaryId": "+4178123456",
+	"createdTimestamp": "2016.03.05 12:12:12",
+	"content": [{
+	    "itemId": "1234567890-001",
+	    "itemName": "pizza",
+	    "quantity": "1",
+	    "price": "7.50",
+	    "totalPrice": "7.50"
+	}]
+}
