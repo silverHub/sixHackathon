@@ -10,8 +10,11 @@
         {{item}}
       </div>
     </div>
-    
-     <button ng-if="invoice.isPrimary" class="button button-block button-stable shareIt" ng-click="shareIt()"></button>
+
+    <button ng-if="invoice.isPrimary" ng-click="shareIt()" class="button-full button button-positive">
+      Share this bill <span class="shareIt">powered by</span>
+    </button>
+
   </ion-content>
 
   <div class="bar bar-positive bar-footer">

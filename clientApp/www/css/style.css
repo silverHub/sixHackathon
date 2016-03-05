@@ -6,9 +6,13 @@ body .pane {
 
 .shareIt {
 	background-image: url(../img/shareit.png);
-	background-position: center;
+	background-position: center right;
 	background-repeat: no-repeat;
 	background-size: contain;
+	padding-right: 50px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
 }
 
 .scroll-content {

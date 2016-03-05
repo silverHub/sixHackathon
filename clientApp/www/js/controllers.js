@@ -97,6 +97,8 @@ $scope.addToConsumption = function addToConsumption(item) {
 ShareWithCtrl.$inject=['$scope','$timeout'];
 function ShareWithCtrl($scope, $timeout) {
   // Magic happens here but now its just mock
+  $scope.navTitle='<img class="title-image" src="img/shareit_sm.png" style="margin-top: 7px;"/>';
+
   var i=0;
   var users = [
     {
