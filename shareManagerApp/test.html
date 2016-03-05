@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test page</title>
+  </head>
+  <body>
+    <h1 id="id"></h1>
+    <div>
+      <button id="sendData"> TEST send data </button>
+      <span id="dataBroadcasted"></span>
+    </div>
+
+    <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var testData = {data: 'testData'};
+      var socket = io();
+      setTimeout(function(){
+        $('#id').html(socket.id);
+      }, 1000);
+
+      socket.on('echo', function(data){
+        console.log('broadcasted', data);
+      });
+
+      $('#sendData').on('click', function(){
+        socket.emit('msg', testData);
+      })
+
+    </script>
+  </body>
+</html>
