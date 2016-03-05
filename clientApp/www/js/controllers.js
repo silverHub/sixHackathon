@@ -116,9 +116,19 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal) {
   }
 }
 
-ShareWithCtrl.$inject=['$scope','$timeout'];
-function ShareWithCtrl($scope, $timeout) {
+ShareWithCtrl.$inject=['$scope','$timeout', '$stateParams'];
+function ShareWithCtrl($scope, $timeout, $stateParams) {
   // Magic happens here but now its just mock
+  $scope.navTitle='<img class="title-image" src="img/shareit_sm.png" style="margin-top: 7px;"/>';
+
+  $scope.shareWith = function(id) {
+    console.log($stateParams.bill);
+    $http.post(Urls.shareBillWithUser,{billId: $stateParams.bill.billId, clientId : id})
+        .then(function(){
+          showBill(true)
+        });
+  };
+
   var i=0;
   var users = [
     {
