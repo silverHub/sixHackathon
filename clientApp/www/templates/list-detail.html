@@ -25,15 +25,15 @@
           <span class="itemSum">{{item.price*item.quantity}} CHF</span>
         </div>
 
-        <div class="itemBox added" ng-if="consumption.length">
-        You: 
-          <span class="itemQuantity">{{consumption.quantity}} x&nbsp;</span>
-          <span class="itemPrice">{{consumption.price}} CHF :&nbsp;</span>
-          <span class="itemSum">{{consumption.price*consumption.quantity}} CHF</span>
+        <div class="itemBox added" ng-if="consumption.length && consumption.contains(item).quantity > 0">
+        You:
+          <span class="itemQuantity">{{consumption.contains(item).quantity}} x&nbsp;</span>
+          <span class="itemPrice">{{consumption.contains(item).price}} CHF :&nbsp;</span>
+          <span class="itemSum">{{consumption.contains(item).price*consumption.contains(item).quantity}} CHF</span>
         </div>
         
         <div class="detailbox" ng-show="item.opened">details</div>
-        <ion-option-button class="button-balanced icon ion-ios-plus-empty" ng-click="addToConsumption({{item}})"></ion-option-button>
+        <ion-option-button class="button-balanced icon ion-ios-plus-empty" ng-click="addToConsumption(item)"></ion-option-button>
       </ion-item>
     </ion-list>
 

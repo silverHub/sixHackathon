@@ -130,7 +130,6 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
       consumedItem.quantity--;
     } else {
       $scope.consumption.splice(index,1);
-      console.log($scope.consumption, index);
     }
   }
 
@@ -140,8 +139,9 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
 
   $scope.addToConsumption = function addToConsumption(item) {
     if(item.quantity > 0){
-      var match = $scope.consumption.contains(item);
       item.quantity--;
+      var match = $scope.consumption.contains(item);
+      
       if(match){
         match.quantity++;
       } else {
@@ -149,8 +149,7 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
         consumedItem.quantity = 1;
         $scope.consumption.push(consumedItem);
       }
-  }
-    console.log($scope.consumption);
+    }
   }
 }
 
