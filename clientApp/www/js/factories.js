@@ -10,7 +10,7 @@ angular.module('clientapp.factories', [])
 Urls.$inject=[];
 function Urls() {
   return {
-    billUrl : 'mocks/getBillDetails.json',
+    billUrl : 'mocks/getBillDetailsNoPrimary.json',
     setBillOwner: '/setBillOwner.json'
   };
 }
@@ -84,13 +84,15 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
     }
 
     function getQR(){
-        return $cordovaBarcodeScanner.scan()
-            .then(function(qrdata) {
-              return getProviderData(qrdata.text);
-            })
-            .catch(function(err){
+      return getProviderData('mock');
 
-            });
+      //  return $cordovaBarcodeScanner.scan()
+    //         .then(function(qrdata) {
+    //           return getProviderData(qrdata.text);
+    //         })
+    //         .catch(function(err){
+
+    //         });
     }
 
   return {
