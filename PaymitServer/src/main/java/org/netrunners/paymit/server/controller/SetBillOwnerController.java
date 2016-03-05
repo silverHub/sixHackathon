@@ -29,6 +29,7 @@ public class SetBillOwnerController {
 		try {
 			setBillOwnerManager.setBillOwner(request.getClientId(), request.getBillId());
 			response.setStatus("OK");
+
 		} catch (SetBillOwnerException e) {
 			logger.error("Unexpected error occurred during setting bill owner", e);
 			response.setStatus("NOK");

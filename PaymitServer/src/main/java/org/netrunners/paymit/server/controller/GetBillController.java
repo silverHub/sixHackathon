@@ -1,7 +1,8 @@
 package org.netrunners.paymit.server.controller;
 
 import org.netrunners.paymit.server.getbill.Bill;
-import org.netrunners.paymit.server.getbill.BillManager;
+import org.netrunners.paymit.server.getbill.GetBillManager;
+import org.netrunners.paymit.server.getbill.GetBillException;
 import org.netrunners.paymit.server.getbill.GetBillRequest;
 import org.netrunners.paymit.server.getbill.GetBillResponse;
 import org.slf4j.Logger;
@@ -19,16 +20,23 @@ public class GetBillController {
 	private Logger logger = LoggerFactory.getLogger(GetBillController.class);
 
 	@Autowired
-	private BillManager billManager;
+	private GetBillManager billManager;
 
 	@RequestMapping(value = "/getBill.json", method = RequestMethod.POST)
 	@ResponseBody
 	public GetBillResponse getBill(@RequestBody GetBillRequest request) {
-		logger.info("Getting {} bill", request.getBillId());
-		Bill bill = billManager.getBill(request.getBillId());
-
+		logger.info("Getting bill with {} identifier", request.getBillId());
 		GetBillResponse response = new GetBillResponse();
-		response.setBill(bill);
+		try {
+			Bill bill = billManager.getBill(request.getBillId());
+			response.setBill(bill);
+			response.setStatus("OK");
+
+		} catch (GetBillException e) {
+			logger.error("Unexpected error occurred during getting bill", e);
+			response.setStatus("NOK");
+		}
+
 		return response;
 	}
 }

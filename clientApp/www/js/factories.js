@@ -10,6 +10,7 @@ Urls.$inject=['ips'];
 function Urls(ips) {
   return {
     billUrl : ips.notification+'/getBillDetails',
+    shareBillWithUser: ips.notification+'/shareBillWithUser',
     setBillOwner: ips.notification+'/setBillOwner'
   };
 }
