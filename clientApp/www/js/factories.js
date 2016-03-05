@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('clientapp.factories', [])
-    .factory('Socket', SocketFactory)
-    .factory('QRFactory', QRFactory)
-    .factory('Urls', Urls)
+angular.module('clientapp')
+  .factory('SocketFactory', SocketFactory)
+  .factory('QRFactory', QRFactory)
+  .factory('Urls', Urls)
 	.factory('AppIdentifier',AppIdentifier);
 
 
@@ -36,10 +36,10 @@ function AppIdentifier() {
 }
 
 
-SocketFactory.$inject=['$log'];
-function SocketFactory($log) {
+SocketFactory.$inject=['$log','ips','$rootScope'];
+function SocketFactory($log,ips,$rootScope) {
 
-  var socket = io.connect();
+  var socket = io.connect(ips.notification);
   return {
     on: function (eventName, callback) {
       socket.on(eventName, function () {

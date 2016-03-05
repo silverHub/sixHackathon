@@ -1,12 +1,12 @@
 'use strict';
 
 var ipAddresses = {
-  backend: '172.16.54.224​:8080',
-  notification: '172.16.49.175:3000'
+  backend: 'http://172.16.54.224​:8080',
+  notification: 'http://172.20.10.7:3000'
 };
 
 
-angular.module('clientapp', ['ionic', 'ngCordova', 'clientapp.controllers', 'clientapp.factories'])
+angular.module('clientapp', ['ionic', 'ngCordova'])
   .value('ips',ipAddresses)
 
   .factory('AppIdentifier', function AppIdentifier() {

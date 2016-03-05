@@ -1,13 +1,14 @@
 'use strict';
 
-angular.module('clientapp.controllers', [])
+angular.module('clientapp')
   .controller('AppCtrl', AppCtrl);
 
-AppCtrl.$inject=['QRFactory','$ionicPopup','Urls','AppIdentifier','$http','$scope', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification'];
-function AppCtrl(QRFactory, $ionicPopup, Urls, AppIdentifier, $http, $scope, $rootScope, $ionicPlatform, $cordovaLocalNotification) {
+AppCtrl.$inject=['QRFactory','SocketFactory','$ionicPopup','Urls','AppIdentifier','$http','$scope', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification'];
+function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $http, $scope, $rootScope, $ionicPlatform, $cordovaLocalNotification) {
 
-
-  $scope.invoice2 = 'aaa123132';
+  SocketFactory.on('echo', function(socket, data){
+      $scope.scheduleDelayedNotification();
+  });
 
   function processInvoice(invoice) {
         $scope.invoice = invoice.data;
@@ -53,11 +54,9 @@ function AppCtrl(QRFactory, $ionicPopup, Urls, AppIdentifier, $http, $scope, $ro
     $scope.scheduleSingleNotification = function () {
       $cordovaLocalNotification.schedule({
         id: 1,
-        title: 'Title here',
-        text: 'Text here',
-        data: {
-          customProperty: 'custom value'
-        }
+        title: 'Szia öcsi',
+        text: 'Bill sharing request arrived',
+        at: new Date().getTime()
       }).then(function (result) {
         // ...
       });
@@ -96,13 +95,13 @@ function AppCtrl(QRFactory, $ionicPopup, Urls, AppIdentifier, $http, $scope, $ro
     
     $scope.scheduleDelayedNotification = function () {
       var now = new Date().getTime();
-      var _10SecondsFromNow = new Date(now + 10 * 1000);
+      var _1SecondsFromNow = new Date(now + 1 * 1000);
       
       $cordovaLocalNotification.schedule({
         id: 1,
         title: 'Title here',
         text: 'Text here',
-        at: _10SecondsFromNow
+        at: _1SecondsFromNow
       }).then(function (result) {
         // ...
       });
