@@ -9,8 +9,8 @@ angular.module('clientapp')
 Urls.$inject=['ips'];
 function Urls(ips) {
   return {
-    billUrl : ips.notification+'/getBillDetails',
-    shareBillWithUser: ips.notification+'/shareBillWithUser',
+    billUrl : ips.notification+'/getBill',
+    shareBillWithUser: ips.notification+'/ShareBillWithUser',
     setBillOwner: ips.notification+'/setBillOwner'
   };
 }
@@ -64,7 +64,7 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
     }
 
     function getQR(){
-      return getBillData('123456789');
+      return getBillData('261616136624');
 
       //  return $cordovaBarcodeScanner.scan()
     //         .then(function(qrdata) {

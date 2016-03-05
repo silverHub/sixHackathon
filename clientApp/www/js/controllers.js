@@ -5,8 +5,8 @@ angular.module('clientapp')
   .controller('DetailsCtrl', DetailsCtrl)
   .controller('ShareWithCtrl', ShareWithCtrl);
 
-AppCtrl.$inject=['QRFactory','SocketFactory','$ionicPopup','Urls','AppIdentifier','$http','$scope', '$state', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification', '$ionicSideMenuDelegate'];
-function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $http, $scope, $state, $rootScope, $ionicPlatform, $cordovaLocalNotification, $ionicSideMenuDelegate) {
+AppCtrl.$inject=['$cordovaDialogs', 'QRFactory','SocketFactory','Urls','AppIdentifier','$http','$scope', '$state', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification', '$ionicSideMenuDelegate'];
+function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier, $http, $scope, $state, $rootScope, $ionicPlatform, $cordovaLocalNotification, $ionicSideMenuDelegate) {
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
@@ -15,6 +15,7 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
   });
 
   function showBill(isPrimary){
+    console.log($scope.invoice);
     if($ionicSideMenuDelegate.isOpen()) {
       $ionicSideMenuDelegate.toggleRight();
     }
@@ -26,28 +27,19 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
         $scope.invoice = invoice.data;
 
         if(!invoice.data.primaryId) {
-          $ionicPopup.show({
-              title: 'Do you want to be the owner of this invoice?',
-              scope: $scope,
-              buttons: [
-                { text: 'No',
-                  type: 'button-assertive',
-                  onTap: function(e) {
-                    showBill(false);
-                  }
-                },
-                {
-                  text: '<b>Yes</b>',
-                  type: 'button-balanced',
-                  onTap: function(e) {
-                    $http.post(Urls.setBillOwner,{billId: invoice.data.billId, clientId : AppIdentifier.getId()})
-                      .then(function(){
-                        showBill(true)
-                      });
-                  }
-                }
-              ]
-          });
+
+          $cordovaDialogs.confirm('', 'Do you want to be the owner of this invoice?', ['Yes','No'])
+            .then(function(index) {
+              // no button = 0, 'OK' = 1, 'Cancel' = 2
+              if (index===1) {
+                $http.post(Urls.setBillOwner,{billId: invoice.data.billId, clientId : AppIdentifier.getId()})
+                   .then(function(){
+                      showBill(true);
+                   });
+              } else {
+                showBill(false);
+              }
+            });
         } else {
           showBill(false);
         }
