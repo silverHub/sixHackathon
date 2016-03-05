@@ -4,6 +4,24 @@ body .pane {
 	background: #eee;
 }
 
+.itemName{
+	    font-size: xx-large;
+			font-weight: bolder;
+			font-family: sans-serif;
+}
+.itemQuantity{
+	display: block;
+	width: 20px;
+	float:right;
+	border: 1px solid red;
+}
+.itemPrice{
+	display: block;
+	width: 20px;
+	float:right;
+	border: 1px solid red;
+}
+
 .shareIt {
 	background-image: url(../img/shareit.png);
 	background-position: center right;

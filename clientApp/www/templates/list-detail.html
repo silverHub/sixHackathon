@@ -4,10 +4,9 @@
 
     <div class="card" data-ng-repeat="item in invoice.bill.billItems">
       <div class="item item-text-wrap"  on-swipe-right="addToConsumption(item)">
-        <span class="name">{{item.itemName}}</span>
-        <span class="quantity">{{item.quantity}}</span>
-        <span class="price">{{item.price}}</span>
-        {{item}}
+        <span class="itemName">{{item.itemName}}</span>
+        <span class="itemQuantity">{{item.quantity}}</span>
+        <span class="itemPrice">{{item.price}}</span>
       </div>
     </div>
 
