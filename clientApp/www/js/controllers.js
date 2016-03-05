@@ -12,9 +12,7 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 
 
   SocketFactory.on('sendBill', function(data){
-    alert('socket on');
-      $scope.invoice = data;
-      alert(data.bill.billId);
+      $state.go('main.listDetail', {bill: data});
   });
 
 
