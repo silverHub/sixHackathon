@@ -6,8 +6,8 @@ import java.util.List;
 public class Bill {
 
 	private String billId;
-	private String primaryId;
-	private Date cratedTimestamp;
+	private String owner;
+	private Date createdTimestamp;
 	private List<BillItem> content;
 	
 	public String getBillId() {
@@ -16,17 +16,17 @@ public class Bill {
 	public void setBillId(String billId) {
 		this.billId = billId;
 	}
-	public String getPrimaryId() {
-		return primaryId;
+	public String getOwner() {
+		return owner;
 	}
-	public void setPrimaryId(String primaryId) {
-		this.primaryId = primaryId;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
-	public Date getCratedTimestamp() {
-		return cratedTimestamp;
+	public Date getCreatedTimestamp() {
+		return createdTimestamp;
 	}
-	public void setCratedTimestamp(Date cratedTimestamp) {
-		this.cratedTimestamp = cratedTimestamp;
+	public void setCreatedTimestamp(Date createdTimestamp) {
+		this.createdTimestamp = createdTimestamp;
 	}
 	public List<BillItem> getContent() {
 		return content;
