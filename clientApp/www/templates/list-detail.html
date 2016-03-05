@@ -2,6 +2,13 @@
   <!-- do you want padding -->
   <ion-content class="padding">
 
+    <div class="card" data-ng-repeat="item in invoice.bill.billItems">
+      <div class="item item-text-wrap">
+        <span>{{item.itemName}}</span>
+        <span>{{item.quantity}}</span>
+        <span>{{item.price}}</span>
+      </div>
+    </div>
     {{invoice | json}}
 
   </ion-content>
