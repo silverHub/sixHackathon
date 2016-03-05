@@ -21,15 +21,17 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
   SocketFactory.on('sendBill', function(bill){
-      $state.go('main.listDetail', {bill: bill});
-      console.log(bill);
-      SocketFactory.on('payItems', function(payedItems){
-        console.log(payedItems);
-        payedItems.map(function(item) {
-          var billItem = bill.contains(item);
-          billItem.quantity -= item.quantity;
+      if(bill.clientId === AppIdentifier.getId()){
+        $state.go('main.listDetail', {bill: bill});
+        console.log(bill);
+        SocketFactory.on('payItems', function(payedItems){
+          console.log(payedItems);
+          payedItems.map(function(item) {
+            var billItem = bill.contains(item);
+            billItem.quantity -= item.quantity;
+          });
         });
-      });
+      }
 
   });
 
@@ -159,14 +161,14 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,App
   }
 }
 
-ShareWithCtrl.$inject=['Urls','SocketFactory','$scope','$timeout', '$stateParams','$rootScope'];
-function ShareWithCtrl(Urls, SocketFactory, $scope, $timeout, $stateParams, $rootScope) {
+ShareWithCtrl.$inject=['Urls','SocketFactory','$scope','$timeout', '$stateParams','$rootScope','AppIdentifier'];
+function ShareWithCtrl(Urls, SocketFactory, $scope, $timeout, $stateParams, $rootScope, AppIdentifier) {
 
   // Magic happens here but now its just mock
   $scope.navTitle='<img class="title-image" src="img/shareit_sm.png" style="margin-top: 7px;"/>';
   $scope.invoice = $stateParams.bill;
   $scope.shareWith = function(id) {
-    SocketFactory.emit('shareBillWithUser', $scope.invoice.bill.billId, function(){
+    SocketFactory.emit('shareBillWithUser',{billId: $scope.invoice.bill.billId, clientId: AppIdentifier.getId()} , function(){
       showBill(true)
     });
   };

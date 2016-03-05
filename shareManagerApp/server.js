@@ -64,19 +64,20 @@ io.on('connect', function(socket){
   socket.on('disconnect', function(data){ console.log(socket.id,'client disconnected'); });
 
 
-  socket.on('shareBillWithUser', function(billId){
-    console.log('/shareBillWithUser event', billId);
+  socket.on('shareBillWithUser', function(data){
+    console.log('/shareBillWithUser event', data);
     request.post({
                   url: host + '/paymit/getBill.json',
                   json: true,
                   headers: {
                     "content-type": "application/json",
                   },
-                  body: { "billId" : billId }
+                  body: { "billId" : data.billId }
                 },
                 function handleResponse(error, response, body){
                   console.log('/shareBillWithUser response', error, body);
                   if(!error && body && body.status === 'OK'){
+                    body.clientId = data.clientId;
                     socket.broadcast.emit('sendBill', body);
                   } else {
                     console.log('Error happened');
