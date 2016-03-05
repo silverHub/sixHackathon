@@ -1,8 +1,22 @@
-<ion-view view-title="Mr. Yo">
+<ion-view view-title="Invoice #{{invoice.bill.billId}}">
   <!-- do you want padding -->
   <ion-content class="padding">
 
-    {{invoice | json}}
-
+    <div class="card" data-ng-repeat="item in invoice.bill.billItems">
+      <div class="item item-text-wrap"  on-swipe-right="addToConsumption(item)">
+        <span>{{item.itemName}}</span>
+        <span>{{item.quantity}}</span>
+        <span>{{item.price}}</span>
+        {{item}}
+      </div>
+    </div>
+    
+     <button ng-if="invoice.isPrimary" class="button button-block button-stable shareIt" ng-click="shareIt()"></button>
   </ion-content>
+
+  <div class="bar bar-positive bar-footer">
+    <div class="buttons">
+      <h1 class="title" data-ng-click="openModal()">Show my consumption</h1>
+    </div>
+</div>
 </ion-view>
