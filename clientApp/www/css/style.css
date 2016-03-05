@@ -5,6 +5,28 @@ body .pane {
   font-family: 'Regular', Arial;
 }
 
+.menu.menu-right h1.title {
+  text-align: left;
+  font-weight: normal;
+}
+
+.menu .icon {
+  font-size: 24px;
+  vertical-align: top;
+  width: 24px;
+  display: inline-block;
+  text-align: center;
+}
+
+.menu .item {
+  line-height: 24px;
+}
+
+.bg1 {
+  background: url(../img/bg1.png) bottom no-repeat;
+  background-size: 100%; 
+}
+
 .itemName{
 	    font-size: x-large;
 			font-weight: bolder;
