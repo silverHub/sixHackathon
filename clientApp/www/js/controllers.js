@@ -87,6 +87,10 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,Socke
   }
   $scope.consumption = [];
 
+  $scope.toggleDetails = function(item) {
+    item.opened = !item.opened; 
+  };
+
   $ionicModal.fromTemplateUrl('templates/consumptionModal.html', {
     scope: $scope,
     animation: 'slide-in-up'

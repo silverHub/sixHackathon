@@ -60,25 +60,39 @@ body .pane {
   width: 100%;
 }
 
-.itemName{
-	    font-size: x-large;
-			font-weight: bolder;
-			font-family: 'Light';
+.detailbox {
+  clear: both;
 }
+
+.item {
+  min-height: 35px;
+}
+
+.item.item-right-editable .item-content {
+  padding: 16px 16px 16px 59px;
+}
+
+.itemName{
+  float: left;
+}
+.itemBox {
+  float: right;
+  white-space: nowrap;
+}
+.added {
+  clear: both;
+  color: green;
+}
+
 .itemQuantity{
-	display: block;
-	width: 60px;
-	float:right;
-	text-align: center;
-		font-size: 200%;
+  font-family: 'Light';
+  float: left;
 }
 .itemPrice{
-	display: block;
-	width: 80px;
-	border-radius: 2px;
-	-webkit-box-shadow: 1px 2px 8px 0px rgba(250,0,0,1);
-  -moz-box-shadow: 1px 2px 8px 0px rgba(250,0,0,1);
-  box-shadow: 1px 2px 8px 0px rgba(250,0,0,1);
+	float: left;
+  font-family: 'Light';
+}
+.itemSum{
 	float:right;
 	text-align: center;
 }
