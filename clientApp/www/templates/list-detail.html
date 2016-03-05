@@ -33,7 +33,7 @@
         </div>
         
         <div class="detailbox" ng-show="item.opened">details</div>
-        <ion-option-button class="button-balanced icon ion-ios-plus-empty" ng-click="addToConsumption(item)"></ion-option-button>
+        <ion-option-button class="button-balanced icon ion-ios-plus-empty" ng-if="item.quantity > 0" ng-click="addToConsumption(item)"></ion-option-button>
       </ion-item>
     </ion-list>
 
