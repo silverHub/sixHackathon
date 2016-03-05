@@ -1,14 +1,27 @@
-<ion-view view-title="Invoice #{{invoice.bill.billId}}">
-  <!-- do you want padding -->
-  <ion-content class="padding">
+<ion-view view-title="Electronic invoice">
 
-    <div class="card" data-ng-repeat="item in invoice.bill.billItems">
-      <div class="item item-text-wrap"  on-swipe-right="addToConsumption(item)">
+    <ion-nav-bar class="bar-light">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="right">
+
+        <button ng-if="invoice.isPrimary" class="button button-icon button-clear ion-ios-upload-outline icon-right" ng-click="shareIt()">share&nbsp;</button>
+
+      </ion-nav-buttons>
+    </ion-nav-bar>
+  <!-- do you want padding -->
+  <ion-content class="">
+    <ion-list>
+      <ion-item>
+        <h2>Invoice <span class="fr">#{{invoice.bill.billId}}</span></h2>
+      </ion-item>
+      <ion-item ng-repeat="item in invoice.bill.billItems" on-swipe-right="addToConsumption(item)">
         <span class="itemName">{{item.itemName}}</span>
         <span class="itemQuantity">{{item.quantity}}</span>
         <span class="itemPrice">{{item.price}} CHF</span>
-      </div>
-    </div>
+      </ion-item>
+    </ion-list>
 
     <button ng-if="invoice.isPrimary" ng-click="shareIt()" class="button-full button button-royal">
       Share this bill <span class="shareIt">powered by</span>

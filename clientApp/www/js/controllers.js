@@ -2,26 +2,37 @@
 
 angular.module('clientapp')
   .controller('AppCtrl', AppCtrl)
+  .controller('HomeCtrl', HomeCtrl)
   .controller('DetailsCtrl', DetailsCtrl)
   .controller('ShareWithCtrl', ShareWithCtrl);
+
+HomeCtrl.$inject=['$scope','$interval'];
+function HomeCtrl($scope, $interval) {
+
+  $interval(function(){
+    $scope.isBlinkerVisible = !$scope.isBlinkerVisible;
+  },400);
+
+}
 
 AppCtrl.$inject=['$cordovaDialogs', 'QRFactory','SocketFactory','Urls','AppIdentifier','$http','$scope', '$state', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification', '$ionicSideMenuDelegate'];
 function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier, $http, $scope, $state, $rootScope, $ionicPlatform, $cordovaLocalNotification, $ionicSideMenuDelegate) {
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
-
   SocketFactory.on('sendBill', function(data){
       $state.go('main.listDetail', {bill: data});
   });
 
-
+  $scope.shareIt = function() {
+    $state.go('main.sharewith',{bill: $scope.invoice});
+  };
 
   function showBill(isPrimary){
-    console.log($scope.invoice);
     if($ionicSideMenuDelegate.isOpen()) {
       $ionicSideMenuDelegate.toggleRight();
     }
+    $rootScope.listscreen = isPrimary;
     $scope.invoice.isPrimary = isPrimary;
     $state.go('main.listDetail', {bill: $scope.invoice});
   }
@@ -58,8 +69,11 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 }
 
 
-DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal'];
-function DetailsCtrl($state, $stateParams, $scope, $ionicModal) {
+DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal', '$rootScope'];
+function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope) {
+
+  $rootScope.homescreen = false;
+
   $scope.invoice = $stateParams.bill;
   $scope.consumption = [];
   $scope.consumption.contains = function contains(itemToFind) {
@@ -113,8 +127,13 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal) {
   }
 }
 
-ShareWithCtrl.$inject=['Urls','SocketFactory','$scope','$timeout', '$stateParams'];
-function ShareWithCtrl(Urls, SocketFactory, $scope, $timeout, $stateParams) {
+ShareWithCtrl.$inject=['Urls','SocketFactory','$scope','$timeout', '$stateParams','$rootScope'];
+function ShareWithCtrl(Urls, SocketFactory, $scope, $timeout, $stateParams, $rootScope) {
+
+  $rootScope.homescreen = false;
+  $rootScope.listscreen = false;
+
+
   // Magic happens here but now its just mock
   $scope.navTitle='<img class="title-image" src="img/shareit_sm.png" style="margin-top: 7px;"/>';
   $scope.invoice = $stateParams.bill;

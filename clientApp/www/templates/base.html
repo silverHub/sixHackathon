@@ -1,7 +1,17 @@
 <ion-view view-title="{{paymit}}">
+    <ion-nav-bar class="bar-light">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
+        </button>
+
+      </ion-nav-buttons>
+    </ion-nav-bar>
   <ion-content class="bg2">
   	<div class="bg1">
-  		
+  		<div class="blinker "ng-show="isBlinkerVisible"></div>
   	</div>
   </ion-content>
 </ion-view>

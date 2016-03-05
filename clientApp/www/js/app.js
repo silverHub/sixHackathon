@@ -85,6 +85,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
           views: {
             'menuContent': {
               templateUrl: 'templates/base.html',
+              controller: 'HomeCtrl'
             }
           } 
         })
