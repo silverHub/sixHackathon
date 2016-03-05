@@ -25,7 +25,7 @@ function AppCtrl(QRFactory, SocketFactory, $ionicPopup, Urls, AppIdentifier, $ht
 
         if(!invoice.data.primaryId) {
           $ionicPopup.show({
-              title: 'Do you want to be the master of this invoice?',
+              title: 'Do you want to be the owner of this invoice?',
               scope: $scope,
               buttons: [
                 { text: 'No',
