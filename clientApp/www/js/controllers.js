@@ -3,15 +3,15 @@
 angular.module('clientapp.controllers', [])
   .controller('AppCtrl', AppCtrl);
 
-AppCtrl.$inject=['$scope', 'QRFactory', '$ionicPopup'];
-function AppCtrl($scope, QRFactory, $ionicPopup) {
+AppCtrl.$inject=['$scope', 'QRFactory', '$ionicPopup','Urls','AppIdentifier'];
+function AppCtrl($scope, QRFactory, $ionicPopup, Urls, AppIdentifier) {
 
-  
+
   $scope.invoice2 = 'aaa123132';
 
   function processInvoice(invoice) {
         $scope.invoice = invoice.data;
-        
+
         if(!invoice.data.primaryId) {
           $ionicPopup.show({
               title: 'Do you want to be the master of this invoice?',
@@ -20,14 +20,15 @@ function AppCtrl($scope, QRFactory, $ionicPopup) {
                 { text: 'No',
                   type: 'button-assertive',
                   onTap: function(e) {
-                    alert('dontSetPrimary');
+                    // No action to the server
                   }
                 },
                 {
                   text: '<b>Yes</b>',
                   type: 'button-positive',
                   onTap: function(e) {
-                    alert('setPrimary');
+                    $http.post(Urls.setBillOwner,{billId: invoice.data.billId,
+                                                clientId : AppIdentifier.getId()});
                   }
                 }
               ]
@@ -43,6 +44,6 @@ function AppCtrl($scope, QRFactory, $ionicPopup) {
             ['catch'](function(error){
               alert('error'+error);
             });
-    }; 
+    };
 
 }
