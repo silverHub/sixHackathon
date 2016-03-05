@@ -13,7 +13,6 @@
 
 	<bean id="setBillOwnerManager" class="org.netrunners.paymit.server.setbillowner.SetBillOwnerManager">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
-		<property name="transactionManager" ref="transactionManager" />
 	</bean>
 	
 	<bean id="paymentManager" class="org.netrunners.paymit.server.payment.PaymentManager">

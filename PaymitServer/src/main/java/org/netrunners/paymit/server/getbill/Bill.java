@@ -7,7 +7,6 @@ public class Bill {
 
 	private String billId;
 	private String ownerId;
-	private String createdTimestamp;
 	private List<BillItem> billItems = new LinkedList<BillItem>();
 
 	public void setBillId(String billId) {
@@ -26,14 +25,6 @@ public class Bill {
 		return ownerId;
 	}
 
-	public void setCreatedTimestamp(String createdTimestamp) {
-		this.createdTimestamp = createdTimestamp;
-	}
-
-	public String getCreatedTimestamp() {
-		return createdTimestamp;
-	}
-
 	public void addBillItem(BillItem billItem) {
 		this.billItems.add(billItem);
 	}
@@ -44,8 +35,7 @@ public class Bill {
 
 	@Override
 	public String toString() {
-		return "Bill [billId=" + billId + ", ownerId=" + ownerId + ", createdTimestamp=" + createdTimestamp
-				+ ", billItems=" + billItems + "]";
+		return "Bill [billId=" + billId + ", ownerId=" + ownerId + ", billItems=" + billItems + "]";
 	}
 
 }

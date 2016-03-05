@@ -13,13 +13,13 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 public class PaymentManager extends JdbcDaoSupport {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PaymentManager.class);
-	
+
 	private PlatformTransactionManager transactionManager;
 
 	public void setTransactionManager(PlatformTransactionManager txManager) {
 		this.transactionManager = txManager;
 	}
-	
+
 	public PaymentResponse createPayment(PaymentRequest request) throws CreatePaymentException {
 		TransactionDefinition txDef = new DefaultTransactionDefinition();
 		TransactionStatus txStatus = transactionManager.getTransaction(txDef);
@@ -37,36 +37,36 @@ public class PaymentManager extends JdbcDaoSupport {
 			throw e;
 		}
 	}
-	
-	
+
 	public void doCreatePayment(PaymentRequest request) throws CreatePaymentException {
-		
 		String billId = request.getBillId();
 		String clientId = request.getClientId();
-		for (PayBillItem item : request.getItems()){
+		for (PayBillItem item : request.getItems()) {
 			String itemId = item.getItemId();
 			BigDecimal quantity = item.getQuantity();
-			
-			
-			int updated = getJdbcTemplate()
-					.update("update t_billitems set paidQuantity = paidQuantity + ? where paidQuantity + ? <= quantity and billId = ? and itemId = ?",
-							new Object[] { quantity, quantity, billId, itemId });
-			if (updated != 1){
-				throw new CreatePaymentException("Cannot create payment because increasing paidQuantity with " +  quantity + " failed for itemId " + itemId);
-			}else{
+
+			int updated = getJdbcTemplate().update(
+					"update t_billitems set paidQuantity = paidQuantity + ? where paidQuantity + ? <= quantity and billId = ? and itemId = ?",
+					new Object[] { quantity, quantity, billId, itemId });
+			if (updated != 1) {
+				throw new CreatePaymentException("Cannot create payment because increasing paidQuantity with "
+						+ quantity + " failed for itemId " + itemId);
+			} else {
 				LOGGER.info("Paidquantity has been updated by {} for itemId = {}", quantity, itemId);
 			}
-			
-			int inserted = getJdbcTemplate()
-					.update("insert into t_payments (itemid, clientId, quantity) values (?,?,?)",
-							new Object[] { itemId, clientId, quantity  });
-			if (inserted != 1){
-				throw new CreatePaymentException("Cannot create payment because saving payment caused a problem for itemid: " + itemId);
-			}else{
-				LOGGER.info("New payment has been created for {} in item {} with {} quantity", clientId, itemId, quantity);
+
+			int inserted = getJdbcTemplate().update(
+					"insert into t_payments (itemid, clientId, quantity) values (?,?,?)",
+					new Object[] { itemId, clientId, quantity });
+			if (inserted != 1) {
+				throw new CreatePaymentException(
+						"Cannot create payment because saving payment caused a problem for itemid: " + itemId);
+			} else {
+				LOGGER.info("New payment has been created for {} in item {} with {} quantity", clientId, itemId,
+						quantity);
 			}
 		}
-		
+
 	}
 
 }

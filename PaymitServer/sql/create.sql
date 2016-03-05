@@ -6,8 +6,7 @@ create table t_bill
 (
 	billId				varchar(20) primary key,
 	ownerId				varchar(256),
-    state               char(1),
-    createdTimestamp	timestamp DEFAULT CURRENT_TIMESTAMP
+    state               char(1)
 );
  
 create table t_billitems
@@ -17,7 +16,6 @@ create table t_billitems
 	itemName			varchar(256) not null,
 	quantity			numeric(15,2) not null,
 	price				numeric(15,2) not null,
-	totalPrice			numeric(15,2) not null,
 	paidQuantity		numeric(15,2) not null default 0
 );
 
