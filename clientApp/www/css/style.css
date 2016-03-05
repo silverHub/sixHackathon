@@ -260,6 +260,16 @@ body .pane {
   }
 }
 
-.consumptionItem{
-	padding-left: 60px;
+.payButton {
+  padding-right: 35px;
+  padding-left: 35px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.closeModal {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 35px;
 }

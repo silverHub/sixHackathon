@@ -1,21 +1,23 @@
   <ion-modal-view>
-    <ion-header-bar class="bar bar-assertive">
-    <div class="buttons" ng-click="reset()">
-      <button class="button">RESET</button>
-    </div>
-      <h1 class="title">My consumption</h1>
-      <div class="buttons" ng-click="closeModal()">
-        <button class="button">CLOSE</button>
+    <ion-header-bar class="bar bar-light">
+      <h1 class="title"><span class="icon ion-bag"></span> My consumption</h1>
+      <div class="buttons closeModal" ng-click="closeModal()">
+        <span class="icon ion-ios-close-empty"></span>
       </div>
     </ion-header-bar>
     <ion-content>
       <ion-list>
         <ion-item class="consumptionItem" ng-repeat="item in consumption track by $index" href="#" click-for-options>
-          <h2 class="consumptionItemName">{{item.itemName}}</h2>
-          <p class="consumptionItemQuantity">{{item.quantity}}</p>
-          <ion-option-button class="button-assertive decreaseButton" ng-click="decrease(item, $index)">-</ion-option-button>
+
+          <div class="itemName">{{item.itemName}}</div>
+          <div class="itemBox">
+            <span class="itemQuantity">{{item.quantity}} x&nbsp;</span>
+            <span class="itemPrice">{{item.price}} CHF :&nbsp;</span>
+            <span class="itemSum">{{item.price*item.quantity}} CHF</span>
+          </div>
+          <ion-option-button class="button-assertive decreaseButton icon ion-ios-minus-empty" ng-click="decrease(item, $index)"></ion-option-button>
         </ion-item>
     	</ion-list>
-    <button class="button button-full button-balanced" data-ng-click="pay()"> PAY </button>
+    <button class="button fr payButton button-balanced" data-ng-click="pay()"> PAY </button>
     </ion-content>
   </ion-modal-view>
