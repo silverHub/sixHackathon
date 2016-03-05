@@ -56,9 +56,6 @@ app.post('/setBillOwner', function(req, res){
                   res.send(error);
                 }
               });
-
-
-
 });
 
 
@@ -66,6 +63,26 @@ io.on('connect', function(socket){
   console.log(socket.id,'client connected, socket');
   socket.on('disconnect', function(data){ console.log(socket.id,'client disconnected'); });
 
+
+  socket.on('shareBillWithUser', function(billId){
+    console.log('/shareBillWithUser event', billId);
+    request.post({
+                  url: host + '/paymit/getBill.json',
+                  json: true,
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  body: { "billId" : billId }
+                },
+                function handleResponse(error, response, body){
+                  console.log('/shareBillWithUser response', error, body);
+                  if(!error && body && body.status === 'OK'){
+                    socket.broadcast.emit('sendBill', body);
+                  } else {
+                    console.log('Error happened');
+                  }
+    });
+  });
   socket.on('msg', function(data){
     console.log(socket.id,'msg arrived', data);
     data = data || {};
