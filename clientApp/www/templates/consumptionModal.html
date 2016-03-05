@@ -13,7 +13,7 @@
         <ion-item class="consumptionItem" ng-repeat="item in consumption track by $index" href="#" click-for-options>
           <h2 class="consumptionItemName">{{item.itemName}}</h2>
           <p class="consumptionItemQuantity">{{item.quantity}}</p>
-          <ion-option-button class="button-assertive decreaseButton" ng-click="decrease(item)">-</ion-option-button>
+          <ion-option-button class="button-assertive decreaseButton" ng-click="decrease(item, $index)">-</ion-option-button>
         </ion-item>
     	</ion-list>
     <button class="button button-full button-balanced" data-ng-click="pay()"> PAY </button>

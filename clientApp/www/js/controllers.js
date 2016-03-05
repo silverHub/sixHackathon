@@ -69,8 +69,8 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 }
 
 
-DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal', '$rootScope'];
-function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope) {
+DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal', '$rootScope','SocketFactory'];
+function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope,SocketFactory) {
 
   $rootScope.homescreen = false;
 
@@ -79,8 +79,8 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope) {
     var ids = this.map(function(item) {
       return item.itemId;
     });
-    if(ids.indexOf(itemToFind.id) > -1){
-      return ids[ids.indexOf(itemToFind.id)];
+    if(ids.indexOf(itemToFind.itemId) > -1){
+      return this[ids.indexOf(itemToFind.itemId)];
     } else {
       return null;
     }
@@ -106,19 +106,27 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope) {
     $scope.modal.show();
   }
   $scope.pay = function pay() {
-    console.log('pay');
+    // var data = {
+    //   billId: ,
+    //   clientId:
+    // };
+    // {"billId":"123456789",
+    //  "clientId":"123456789",
+    //  "items":[{"itemId":"123456789-2", "quantity":2}, {"itemId":"123456789-3", "quantity":100}]}
+    SocketFactory.emit('payItems');
   }
   $scope.closeModal = function closeModal() {
     $scope.modal.hide();
   }
-  $scope.decrease = function decrease(item) {
-    var match = $scope.consumption.contains(item);
-    if (match) {
-      if(match.quantity > 1){
-        match.quantity--;
-      } else {
+  $scope.decrease = function decrease(consumedItem, index) {
 
-      }
+    var match = $scope.invoice.bill.billItems.contains(consumedItem);
+    match.quantity++;
+    if (consumedItem.quantity > 1) {
+      consumedItem.quantity--;
+    } else {
+      $scope.consumption.splice(index,1);
+      console.log($scope.consumption, index);
     }
   }
 
@@ -127,15 +135,17 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope) {
   });
 
   $scope.addToConsumption = function addToConsumption(item) {
-    var match = $scope.consumption.contains(item);
-    item.quantity--;
-    if(match){
-      match.quantity++;
-    } else {
-      var consumedItem = JSON.parse(JSON.stringify(item));
-      consumedItem.quantity = 1;
-      $scope.consumption.push(consumedItem);
-    }
+    if(item.quantity > 0){
+      var match = $scope.consumption.contains(item);
+      item.quantity--;
+      if(match){
+        match.quantity++;
+      } else {
+        var consumedItem = JSON.parse(JSON.stringify(item));
+        consumedItem.quantity = 1;
+        $scope.consumption.push(consumedItem);
+      }
+  }
     console.log($scope.consumption);
   }
 }
