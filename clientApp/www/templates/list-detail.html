@@ -1,6 +1,7 @@
-<ion-view view-title="PAYMIT">
+<ion-view view-title="Invoice #{{invoice.bill.billId}}">
   <!-- do you want padding -->
   <ion-content class="padding">
+
     <div class="card" data-ng-repeat="item in invoice.bill.billItems">
       <div class="item item-text-wrap"  on-swipe-right="addToConsumption(item)">
         <span class="name">{{item.itemName}}</span>
@@ -11,7 +12,7 @@
     </div>
   </ion-content>
 
-  <div class="bar bar-positive bar-footer">
+  <div data-ng-if="consumption.length" class="bar bar-positive bar-footer">
     <div class="buttons">
       <h1 class="title" data-ng-click="openModal()">Show my consumption</h1>
     </div>
