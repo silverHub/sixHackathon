@@ -65,6 +65,16 @@ DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal'];
 function DetailsCtrl($state, $stateParams, $scope, $ionicModal) {
   $scope.invoice = $stateParams.bill;
   $scope.consumption = [];
+  $scope.consumption.contains = function contains(itemToFind) {
+    var ids = this.map(function(item) {
+      return item.id;
+    });
+    if(ids.indexOf(itemToFind.id) > -1){
+      return ids[ids.indexOf(itemToFind.id)];
+    } else {
+      return null;
+    }
+  }
 
   $ionicModal.fromTemplateUrl('templates/consumptionModal.html', {
     scope: $scope,
@@ -77,21 +87,33 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal) {
     $state.go('main.sharewith');
   };
 
-$scope.reset = function reset() {
-  $scope.consumption = [];
-}
-$scope.openModal = function openModal(e) {
-  $scope.modal.show(e);
-}
-$scope.pay = function pay() {
-  console.log('pay');
-}
-$scope.closeModal = function() {
-  $scope.modal.hide();
-}
-$scope.addToConsumption = function addToConsumption(item) {
-  $scope.consumption.push(item.name);
-}
+  $scope.reset = function reset() {
+    console.log('reset');
+    $scope.consumption = [];
+  }
+  $scope.openModal = function openModal() {
+    $scope.modal.show();
+  }
+  $scope.pay = function pay() {
+    console.log('pay');
+  }
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  }
+
+  $scope.$on('$destroy', function() {
+   $scope.modal.remove();
+ });
+
+  $scope.addToConsumption = function addToConsumption(item) {
+    console.log(item);
+    if($scope.consumption.contains(item)){
+      var item = $scope.consumption.contains(item);
+      item.quantity++;
+    } else {
+      $scope.consumption.push(item);
+    }
+  }
 }
 
 ShareWithCtrl.$inject=['$scope','$timeout'];
@@ -104,7 +126,7 @@ function ShareWithCtrl($scope, $timeout) {
     {
      id: '+41791234567',
      name: 'Karoly Norris',
-     image: 'img/karoly.png'   
+     image: 'img/karoly.png'
     },{
       id: '+41782345678',
       name: 'Tamas Stallone',
@@ -114,7 +136,7 @@ function ShareWithCtrl($scope, $timeout) {
       name: 'Krisztian Schwarzenegger',
       image: 'img/krisztian.png'
     }
-  ];  
+  ];
 
   var timeout = [1500, 2500,1000];
 
@@ -133,6 +155,5 @@ function ShareWithCtrl($scope, $timeout) {
     },timeout[i]);
   }
   getUser(i);
-  
-}
 
+}
