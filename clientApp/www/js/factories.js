@@ -10,7 +10,6 @@ Urls.$inject=['ips'];
 function Urls(ips) {
   return {
     billUrl : ips.notification+'/getBill',
-    shareBillWithUser: ips.notification+'/ShareBillWithUser',
     setBillOwner: ips.notification+'/setBillOwner'
   };
 }
@@ -20,6 +19,7 @@ SocketFactory.$inject=['$log','ips','$rootScope'];
 function SocketFactory($log,ips,$rootScope) {
 
   var socket = io.connect(ips.notification);
+  alert('connected to socket');
   return {
     on: function (eventName, callback) {
       socket.on(eventName, function () {

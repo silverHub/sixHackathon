@@ -86,7 +86,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
             'menuContent': {
               templateUrl: 'templates/base.html',
             }
-          }
+          } 
         })
         .state('main.listDetail', {
           url: '/base/detail',
@@ -100,6 +100,7 @@ angular.module('clientapp', ['ionic','ngCordova'])
         })
         .state('main.sharewith', {
           url: '/base/sarewith',
+          params: {bill: null},
           views: {
             'menuContent': {
               templateUrl: 'templates/shareWith.html',
