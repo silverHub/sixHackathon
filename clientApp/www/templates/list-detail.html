@@ -4,17 +4,15 @@
 
     <div class="card" data-ng-repeat="item in invoice.bill.billItems">
       <div class="item item-text-wrap"  on-swipe-right="addToConsumption(item)">
-        <span>{{item.itemName}}</span>
-        <span>{{item.quantity}}</span>
-        <span>{{item.price}}</span>
+        <span class="name">{{item.itemName}}</span>
+        <span class="quantity">{{item.quantity}}</span>
+        <span class="price">{{item.price}}</span>
         {{item}}
       </div>
     </div>
-    
-     <button ng-if="invoice.isPrimary" class="button button-block button-stable shareIt" ng-click="shareIt()"></button>
   </ion-content>
 
-  <div class="bar bar-positive bar-footer">
+  <div data-ng-if="consumption.length" class="bar bar-positive bar-footer">
     <div class="buttons">
       <h1 class="title" data-ng-click="openModal()">Show my consumption</h1>
     </div>

@@ -1,5 +1,9 @@
 /* Empty. Add your own CSS if you like */
 
+body .pane {
+	background: #eee;
+}
+
 .shareIt {
 	background-image: url(../img/shareit.png);
 	background-position: center;
@@ -14,13 +18,17 @@
 }
 .scroll {
   display: table-cell;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .sharewith {
 	text-align: center;
 	width: 100%;
 	position: relative;
+}
+
+.sharewith .scroll {
+	width: 100%;
 }
 
 .sharewith .list {
@@ -40,11 +48,10 @@
 .wifi-symbol [foo], .wifi-symbol {
   display: block;
   position: absolute;
-  top: 50%;
   display: inline-block;
   width: 150px;
   height: 150px;
-  margin-top: -187.5px;
+  bottom: 150px;
   -ms-transform: rotate(-45deg) translate(-100px);
   -moz-transform: rotate(-45deg) translate(-100px);
   -o-transform: rotate(-45deg) translate(-100px);
@@ -67,24 +74,24 @@
   -webkit-border-radius: 0 100% 0 0;
   border-radius: 0 100% 0 0;
   opacity: 0;
-  -o-animation: wifianimation 3s infinite;
-  -moz-animation: wifianimation 3s infinite;
-  -webkit-animation: wifianimation 3s infinite;
-  animation: wifianimation 3s infinite;
+  -o-animation: wifianimation 600ms infinite;
+  -moz-animation: wifianimation 600ms infinite;
+  -webkit-animation: wifianimation 600ms infinite;
+  animation: wifianimation 600ms infinite;
 }
 .wifi-symbol .wifi-circle.first {
-  -o-animation-delay: 800ms;
-  -moz-animation-delay: 800ms;
-  -webkit-animation-delay: 800ms;
-  animation-delay: 800ms;
+  -o-animation-delay: 200ms;
+  -moz-animation-delay: 200ms;
+  -webkit-animation-delay: 200ms;
+  animation-delay: 200ms;
 }
 .wifi-symbol .wifi-circle.second {
   width: 5em;
   height: 5em;
-  -o-animation-delay: 400ms;
-  -moz-animation-delay: 400ms;
-  -webkit-animation-delay: 400ms;
-  animation-delay: 400ms;
+  -o-animation-delay: 100ms;
+  -moz-animation-delay: 100ms;
+  -webkit-animation-delay: 100ms;
+  animation-delay: 100ms;
 }
 .wifi-symbol .wifi-circle.third {
   width: 3em;

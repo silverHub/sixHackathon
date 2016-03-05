@@ -18,7 +18,7 @@ create table t_billitems
 	quantity			numeric(15,2) not null,
 	price				numeric(15,2) not null,
 	totalPrice			numeric(15,2) not null,
-	paidAmount			numeric(15,2) not null
+	paidQuantity		numeric(15,2) not null default 0
 );
 
 create table t_payments
