@@ -75,10 +75,9 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope) {
   $rootScope.homescreen = false;
 
   $scope.invoice = $stateParams.bill;
-  $scope.consumption = [];
-  $scope.consumption.contains = function contains(itemToFind) {
+  Array.prototype.contains = function findById(itemToFind) {
     var ids = this.map(function(item) {
-      return item.id;
+      return item.itemId;
     });
     if(ids.indexOf(itemToFind.id) > -1){
       return ids[ids.indexOf(itemToFind.id)];
@@ -86,6 +85,7 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope) {
       return null;
     }
   }
+  $scope.consumption = [];
 
   $ionicModal.fromTemplateUrl('templates/consumptionModal.html', {
     scope: $scope,
@@ -108,22 +108,35 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal, $rootScope) {
   $scope.pay = function pay() {
     console.log('pay');
   }
-  $scope.closeModal = function() {
+  $scope.closeModal = function closeModal() {
     $scope.modal.hide();
+  }
+  $scope.decrease = function decrease(item) {
+    var match = $scope.consumption.contains(item);
+    if (match) {
+      if(match.quantity > 1){
+        match.quantity--;
+      } else {
+
+      }
+    }
   }
 
   $scope.$on('$destroy', function() {
    $scope.modal.remove();
- });
+  });
 
   $scope.addToConsumption = function addToConsumption(item) {
-    console.log(item);
-    if($scope.consumption.contains(item)){
-      var item = $scope.consumption.contains(item);
-      item.quantity++;
+    var match = $scope.consumption.contains(item);
+    item.quantity--;
+    if(match){
+      match.quantity++;
     } else {
-      $scope.consumption.push(item);
+      var consumedItem = JSON.parse(JSON.stringify(item));
+      consumedItem.quantity = 1;
+      $scope.consumption.push(consumedItem);
     }
+    console.log($scope.consumption);
   }
 }
 

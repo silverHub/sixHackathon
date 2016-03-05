@@ -9,12 +9,11 @@
       </div>
     </ion-header-bar>
     <ion-content>
-      {{consumption}}
       <ion-list>
-        <ion-item ng-repeat="item in consumption" href="#" click-for-options>
-          <h2>{{item.name}}</h2>
-          <p>{{item.quantity}}</p>
-          <ion-option-button class="button-assertive" ng-click="decrease(item)">-</ion-option-button>
+        <ion-item class="consumptionItem" ng-repeat="item in consumption track by $index" href="#" click-for-options>
+          <h2 class="consumptionItemName">{{item.itemName}}</h2>
+          <p class="consumptionItemQuantity">{{item.quantity}}</p>
+          <ion-option-button class="button-assertive decreaseButton" ng-click="decrease(item)">-</ion-option-button>
         </ion-item>
     	</ion-list>
     <button class="button button-full button-balanced" data-ng-click="pay()"> PAY </button>

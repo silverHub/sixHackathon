@@ -245,3 +245,7 @@ body .pane {
     opactiy: 0.1;
   }
 }
+
+.consumptionItem{
+	padding-left: 60px;
+}
