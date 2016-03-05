@@ -5,6 +5,28 @@ body .pane {
   font-family: 'Regular', Arial;
 }
 
+.menu.menu-right h1.title {
+  text-align: left;
+  font-weight: normal;
+}
+
+.menu .icon {
+  font-size: 24px;
+  vertical-align: top;
+  width: 24px;
+  display: inline-block;
+  text-align: center;
+}
+
+.menu .item {
+  line-height: 24px;
+}
+
+.bg1 {
+  background: url(../img/bg1.png) bottom no-repeat;
+  background-size: 100%; 
+}
+
 .itemName{
 	    font-size: x-large;
 			font-weight: bolder;
@@ -12,15 +34,21 @@ body .pane {
 }
 .itemQuantity{
 	display: block;
-	width: 20px;
+	width: 60px;
 	float:right;
-	border: 1px solid red;
+	text-align: center;
+		font-size: 200%;
 }
 .itemPrice{
 	display: block;
-	width: 20px;
+	width: 80px;
+	border-radius: 2px;
+	-webkit-box-shadow: 1px 2px 8px 0px rgba(250,0,0,1);
+-moz-box-shadow: 1px 2px 8px 0px rgba(250,0,0,1);
+box-shadow: 1px 2px 8px 0px rgba(250,0,0,1);
 	float:right;
-	border: 1px solid red;
+	text-align: center;
+
 }
 
 .shareIt {
