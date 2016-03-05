@@ -44,7 +44,7 @@ angular.module('clientapp', ['ionic', 'ngCordova', 'clientapp.controllers', 'cli
           views: {
             'tab-list': {
               templateUrl: 'templates/base.html',
-              controller: 'AppCtrl as ctrl'
+              controller: 'AppCtrl'
             }
           }
         })
@@ -53,7 +53,7 @@ angular.module('clientapp', ['ionic', 'ngCordova', 'clientapp.controllers', 'cli
           views: {
             'tab-list': {
               templateUrl: 'templates/list-detail.html',
-              controller: 'DetailCtrl as ctrl'
+              controller: 'DetailCtrl'
             }
           }
         });
