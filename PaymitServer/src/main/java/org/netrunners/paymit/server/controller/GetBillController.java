@@ -25,7 +25,7 @@ public class GetBillController {
 	@ResponseBody
 	public GetBillResponse getBill(@RequestBody GetBillRequest request) {
 		logger.info("Getting {} bill", request.getBillId());
-		Bill bill = billManager.getBillDetails(request.getBillId());
+		Bill bill = billManager.getBill(request.getBillId());
 
 		GetBillResponse response = new GetBillResponse();
 		response.setBill(bill);
