@@ -118,8 +118,8 @@ $ionicPopup.show({
 }
 
 
-DetailsCtrl.$inject=['$cordovaDialogs','$state', '$stateParams','$scope','$ionicModal','SocketFactory','SocketListeners','AppIdentifier'];
-function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,SocketFactory,SocketListeners,AppIdentifier) {
+DetailsCtrl.$inject=['$rootScope','$cordovaDialogs','$state', '$stateParams','$scope','$ionicModal','SocketFactory','SocketListeners','AppIdentifier'];
+function DetailsCtrl($rootScope, $cordovaDialogs,$state, $stateParams, $scope, $ionicModal,SocketFactory,SocketListeners,AppIdentifier) {
 
   //$scope.invoice = $stateParams.bill;
   // $scope.invoice.bill.billItems[1].quantity = 2;
@@ -200,17 +200,23 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
     SocketFactory.emit('payItems',data);
   }
 
-  SocketFactory.on('payResp', function(respStatus){
-    if(respStatus === 'OK'){
-      // successfull pay, navigate away / empty consumption
-      $scope.consumption = [];
-      $scope.closeModal();
-      $cordovaDialogs.alert('','Successful pay!');
-    } else {
-      // pay not successfull, show alert
-      $cordovaDialogs.alert('','Payment failed! :(');
-    }
-  });
+
+
+  if(!$rootScope.flag) {
+    $rootScope.flag = true;
+    SocketFactory.on('payResp', function(respStatus){
+
+      if(respStatus === 'OK'){
+        // successfull pay, navigate away / empty consumption
+        $scope.consumption = [];
+        $scope.closeModal();
+        $cordovaDialogs.alert('','Successful pay!');
+      } else {
+        // pay not successfull, show alert
+        $cordovaDialogs.alert('','Payment failed! :(');
+      }
+    });
+  }
 
   $scope.closeModal = function closeModal() {
     $scope.modal.hide();
