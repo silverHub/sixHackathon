@@ -20,20 +20,20 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
+/// CLIENT 
   SocketFactory.on('sendBill', function(bill){
-      if(bill.clientId === AppIdentifier.getId()){
-        $state.go('main.listDetail', {bill: bill});
-        console.log(bill);
-        SocketFactory.on('payItems', function(payedItems){
-          console.log(payedItems);
-          payedItems.items.map(function(item) {
-            var billItem = bill.contains(item);
-            billItem.quantity -= item.quantity;
-          });
-        });
-        SocketListeners.payItemsListener(bill);
-      }
-
+    if(bill.clientId === AppIdentifier.getId()){
+      $state.go('main.listDetail', {bill: bill});
+      console.log(bill);
+      // SocketFactory.on('payItems', function(payedItems){
+      //   console.log(payedItems);
+      //   payedItems.items.map(function(item) {
+      //     var billItem = bill.billItems.contains(item);
+      //     billItem.quantity -= item.quantity;
+      //   });
+      // });
+      SocketListeners.payItemsListener(bill);
+    }
   });
 
   $scope.shareIt = function() {
@@ -90,7 +90,7 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
 DetailsCtrl.$inject=['$cordovaDialogs','$state', '$stateParams','$scope','$ionicModal','SocketFactory','SocketListeners','AppIdentifier'];
 function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,SocketFactory,SocketListeners,AppIdentifier) {
 
-  $scope.invoice = $stateParams.bill;
+  //$scope.invoice = $stateParams.bill;
   // $scope.invoice.bill.billItems[1].quantity = 2;
   // $scope.invoice.bill.billItems[1].billPayments = [
   //   {
