@@ -98,6 +98,7 @@ io.on('connect', function(socket){
                   console.log('/payItems response', error, body);
                   if(!error && body && body.status === 'OK'){
                     socket.broadcast.emit('payItems', body);
+                    socket.emit('payResp', body.status);
                   } else {
                     console.log('Error happened');
                   }
