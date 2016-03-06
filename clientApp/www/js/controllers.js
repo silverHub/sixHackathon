@@ -20,7 +20,7 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
-/// CLIENT 
+/// CLIENT
   SocketFactory.on('sendBill', function(bill){
     if(bill.clientId === AppIdentifier.getId()){
       $state.go('main.listDetail', {bill: bill});
@@ -43,10 +43,11 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
   }
 
   $rootScope.renewState = function(invoice) {
-    console.log('renew state', invoice);
     $scope.invoice = invoice.data;
-    SocketListeners.setConsumedQty(invoice.data.bill);
-    //showBill(AppIdentifier.getId() === invoice.data.bill.ownerId);
+      $scope.apply(function(){
+        SocketListeners.setConsumedQty(invoice.data.bill);
+      });
+    console.log('renew state', invoice);
   };
 
   function processInvoice(invoice) {
@@ -190,8 +191,6 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
   $scope.$on('$destroy', function() {
    $scope.modal.remove();
   });
-
-
 }
 
 ShareWithCtrl.$inject=['SocketListeners','Urls','SocketFactory','$scope','$timeout', '$stateParams','$rootScope','AppIdentifier'];

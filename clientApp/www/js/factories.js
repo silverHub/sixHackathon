@@ -28,13 +28,8 @@ function SocketListeners(SocketFactory, QRFactory, $rootScope) {
 
     function payItemsListener() {
       SocketFactory.on('payItems', function(payedItems){
-          // console.log(bill);
-          // payedItems.items.map(function(item) {
-          //   var billItem = bill.billItems.contains(item);
-          //   billItem.quantity -= item.quantity;
-          // });
+
           QRFactory.getBillData(payedItems.billId).then(function(data){
-            setConsumedQty(data.data.bill);
             $rootScope.renewState(data);
           })
       });
