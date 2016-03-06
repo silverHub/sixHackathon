@@ -273,3 +273,7 @@ body .pane {
   right: 15px;
   font-size: 35px;
 }
+
+.inactive div.item-content {
+	background-color: #dedede;
+}

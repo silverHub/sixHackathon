@@ -16,7 +16,7 @@
       <ion-item>
         <h2>Invoice <span class="fr">#{{invoice.bill.billId}}</span></h2>
       </ion-item>
-      <ion-item ng-repeat="item in invoice.bill.billItems" class="item" click-for-options>
+      <ion-item ng-repeat="item in invoice.bill.billItems" ng-class="{'inactive': item.quantity <= 0}" class="item" click-for-options>
         <div class="itemName">{{item.itemName}}</div>
         <div class="itemBox">
         Total:
