@@ -19,14 +19,13 @@
       <ion-item ng-repeat="item in invoice.bill.billItems" ng-class="{'inactive': item.quantity <= 0}" class="item" click-for-options>
         <div class="itemName">{{item.itemName}}</div>
         <div class="itemBox">
-        Total:
           <span class="itemQuantity">{{item.quantity}} x&nbsp;</span>
           <span class="itemPrice">{{item.price}} CHF :&nbsp;</span>
           <span class="itemSum">{{item.price*item.quantity}} CHF</span>
         </div>
 
         <div class="itemBox added" ng-if="consumption.length && consumption.contains(item).quantity > 0">
-        You:
+          <span class="itemForYou">You:</span>
           <span class="itemQuantity">{{consumption.contains(item).quantity}} x&nbsp;</span>
           <span class="itemPrice">{{consumption.contains(item).price}} CHF :&nbsp;</span>
           <span class="itemSum">{{consumption.contains(item).price*consumption.contains(item).quantity}} CHF</span>

@@ -75,6 +75,10 @@ body .pane {
 .itemName{
   float: left;
 }
+.itemForYou{
+  float: left;
+  padding-right: 2px;
+}
 .itemBox {
   float: right;
   white-space: nowrap;
@@ -94,7 +98,8 @@ body .pane {
 }
 .itemSum{
 	float:right;
-	text-align: center;
+	text-align: right;
+	min-width: 60px;
 }
 
 .scanit {
