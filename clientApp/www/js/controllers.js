@@ -87,13 +87,13 @@ DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal','SocketFact
 function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,AppIdentifier) {
 
   $scope.invoice = $stateParams.bill;
-  console.log($scope.invoice);
-  // $scope.invoice.billItems[0].billPayments = [
-  //   {
-  //     "clientId": "+36304244773",
-  //     "quantity": 1
-  //   }
-  // ];
+
+  $scope.invoice.bill.billItems[0].billPayments = [
+    {
+      "clientId": "+36304244773",
+      "quantity": 1
+    }
+  ];
 
   Array.prototype.contains = function findById(itemToFind) {
     var ids = this.map(function(item) {
