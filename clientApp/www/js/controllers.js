@@ -23,7 +23,18 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
 /// CLIENT
   SocketFactory.on('sendBill', function(bill){
     if(bill.clientId === AppIdentifier.getId()){
-      $state.go('main.listDetail', {bill: bill});
+
+      $cordovaDialogs.confirm('Do you accept?', 'Someone want to share an invoice with you', ['Yes','No'])
+            .then(function(index) {
+              // no button = 0, 'OK' = 1, 'Cancel' = 2
+              if (index===1) {
+                $state.go('main.listDetail', {bill: bill});
+              } else {
+                // TODO: notify master
+              }
+            });
+
+      
       $scope.invoice = bill;
       SocketListeners.payItemsListener(bill);
     }
@@ -102,7 +113,7 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
   //   }
   // ];
   SocketListeners.setConsumedQty($scope.invoice.bill);
-
+  
   $scope.consumedQty = SocketListeners.consumedQty;
   console.log('ctrl socetl',$scope.consumedQty);
 
@@ -153,19 +164,6 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
   $scope.openModal = function openModal() {
     $scope.modal.show();
   }
-
-
-  SocketFactory.on('payResp', function(respStatus){
-    if(respStatus === 'OK'){
-      // successfull pay, navigate away / empty consumption
-      $scope.consumption = [];
-      $scope.closeModal();
-      $cordovaDialogs.alert('Successfull pay!');
-    } else {
-      // pay not successfull, show alert
-      $cordovaDialogs.alert('Payment failed! :(');
-    }
-  });
   $scope.pay = function pay() {
     var data = {
       billId: $scope.invoice.bill.billId,
@@ -175,6 +173,17 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
       })
     };
     SocketFactory.emit('payItems',data);
+    SocketFactory.on('payResp', function(respStatus){
+      if(respStatus === 'OK'){
+        // successfull pay, navigate away / empty consumption
+        $scope.consumption = [];
+        $scope.closeModal();
+        $cordovaDialogs.alert('Successfull pay!');
+      } else {
+        // pay not successfull, show alert
+        $cordovaDialogs.alert('Payment failed! :(');
+      }
+    });;
   }
 
   $scope.closeModal = function closeModal() {
