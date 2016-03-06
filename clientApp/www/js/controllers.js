@@ -102,7 +102,7 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
   //   }
   // ];
   SocketListeners.setConsumedQty($scope.invoice.bill);
-  
+
   $scope.consumedQty = SocketListeners.consumedQty;
   console.log('ctrl socetl',$scope.consumedQty);
 
@@ -162,7 +162,7 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
       })
     };
     SocketFactory.emit('payItems',data);
-    SocketFactory.on('payResp', function(respStatus){
+    SocketFactory.one('payResp', function(respStatus){
       if(respStatus === 'OK'){
         // successfull pay, navigate away / empty consumption
         $scope.consumption = [];
