@@ -180,7 +180,7 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
       // successfull pay, navigate away / empty consumption
       $scope.consumption = [];
       $scope.closeModal();
-      $cordovaDialogs.alert('','Successfull pay!');
+      $cordovaDialogs.alert('','Successful pay!');
     } else {
       // pay not successfull, show alert
       $cordovaDialogs.alert('','Payment failed! :(');
