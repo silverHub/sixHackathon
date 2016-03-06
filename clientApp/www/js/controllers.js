@@ -43,8 +43,9 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
   }
 
   $rootScope.renewState = function(invoice) {
-    console.log('renew state');
+    console.log('renew state', invoice);
     $scope.invoice = invoice.data;
+    SocketListeners.setConsumedQty(invoice.data.bill);
     //showBill(AppIdentifier.getId() === invoice.data.bill.ownerId);
   };
 
