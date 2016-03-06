@@ -15,8 +15,8 @@ function Urls(ips) {
   };
 }
 
-SocketListeners.$inject=['SocketFactory','QRFactory','$rootScope'];
-function SocketListeners(SocketFactory, QRFactory, $rootScope) {
+SocketListeners.$inject=['SocketFactory','QRFactory','$rootScope','$cordovaDialogs'];
+function SocketListeners(SocketFactory, QRFactory, $rootScope, $cordovaDialogs) {
 
     var consumedQty = [0,0,0];
 
@@ -31,6 +31,7 @@ function SocketListeners(SocketFactory, QRFactory, $rootScope) {
 
           QRFactory.getBillData(payedItems.billId).then(function(data){
             $rootScope.renewState(data);
+            $cordovaDialogs.alert('','Someone payed you! :)');
           })
       });
     }
