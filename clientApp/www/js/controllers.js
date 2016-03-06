@@ -83,17 +83,28 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 }
 
 
-DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal','SocketFactory','AppIdentifier'];
-function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,AppIdentifier) {
+DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal','SocketFactory','SocketListeners','AppIdentifier'];
+function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,SocketListeners,AppIdentifier) {
 
   $scope.invoice = $stateParams.bill;
-
-  $scope.invoice.bill.billItems[0].billPayments = [
+  $scope.invoice.bill.billItems[1].quantity = 2;
+  $scope.invoice.bill.billItems[1].billPayments = [
     {
       "clientId": "+36304244773",
       "quantity": 1
+    },
+    {
+      "clientId": "+36304244773",
+      "quantity": 2
+    },
+    {
+      "clientId": "+36704244773",
+      "quantity": 1
     }
   ];
+
+  SocketListeners.setConsumedQty($scope.invoice.bill);
+  $scope.consumedQty = SocketListeners.consumedQty;
 
   Array.prototype.contains = function findById(itemToFind) {
     var ids = this.map(function(item) {

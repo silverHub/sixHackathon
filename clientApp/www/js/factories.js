@@ -17,8 +17,13 @@ function Urls(ips) {
 
 SocketListeners.$inject=['SocketFactory'];
 function SocketListeners(SocketFactory) {
+
+    var consumedQty = [];
+
     return {
-      payItemsListener:payItemsListener
+      payItemsListener: payItemsListener,
+      setConsumedQty: setConsumedQty,
+      consumedQty: consumedQty
     };
 
     function payItemsListener(bill) {
@@ -29,7 +34,18 @@ function SocketListeners(SocketFactory) {
             var billItem = bill.billItems.contains(item);
             billItem.quantity -= item.quantity;
           });
+          setConsumedQty(bill);
+      });
+    }
+
+    function setConsumedQty(bill){
+      bill.billItems.forEach(function(item){
+        var qty = 0;
+        item.billPayments.forEach(function(i){
+            qty += i.quantity;
         });
+        consumedQty.push(qty);
+      });
     }
 }
 
