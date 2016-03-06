@@ -98,7 +98,7 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
 
        return $cordovaBarcodeScanner.scan()
             .then(function(qrdata) {
-              return getProviderData(qrdata.text);
+              return getBillData(qrdata.text);
             })
             .catch(function(err){
 

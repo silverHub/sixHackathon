@@ -15,8 +15,8 @@ function HomeCtrl($scope, $interval) {
 
 }
 
-AppCtrl.$inject=['$cordovaDialogs', 'QRFactory','SocketFactory','Urls','SocketListeners','AppIdentifier','$http','$scope', '$state', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification', '$ionicSideMenuDelegate'];
-function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListeners, AppIdentifier, $http, $scope, $state, $rootScope, $ionicPlatform, $cordovaLocalNotification, $ionicSideMenuDelegate) {
+AppCtrl.$inject=['$ionicPopup','$cordovaDialogs', 'QRFactory','SocketFactory','Urls','SocketListeners','AppIdentifier','$http','$scope', '$state', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification', '$ionicSideMenuDelegate'];
+function AppCtrl($ionicPopup, $cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListeners, AppIdentifier, $http, $scope, $state, $rootScope, $ionicPlatform, $cordovaLocalNotification, $ionicSideMenuDelegate) {
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
@@ -63,21 +63,46 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
 
   function processInvoice(invoice) {
         $scope.invoice = invoice.data;
-        console.log(AppIdentifier.getId());
         if(!invoice.data.primaryId) {
 
-          $cordovaDialogs.confirm('', 'Do you want to be the owner of this invoice?', ['Yes','No'])
-            .then(function(index) {
-              // no button = 0, 'OK' = 1, 'Cancel' = 2
-              if (index===1) {
-                $http.post(Urls.setBillOwner,{billId: invoice.data.bill.billId, clientId : AppIdentifier.getId()})
+
+
+$ionicPopup.show({
+    title: 'Do you want to be the owner of this invoice?',
+    buttons: [
+      {
+        text: '<b>No</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          showBill(false);
+        }
+      },
+      {
+        text: '<b>Yes</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          $http.post(Urls.setBillOwner,{billId: invoice.data.bill.billId, clientId : AppIdentifier.getId()})
                    .then(function(){
                       showBill(true);
                    });
-              } else {
-                showBill(false);
-              }
-            });
+        }
+      }
+    ]
+});
+
+          // $cordovaDialogs.confirm('', 'Do you want to be the owner of this invoice?', ['Yes','No'])
+          //   .then(function(index) {
+          //     // no button = 0, 'OK' = 1, 'Cancel' = 2
+          //     if (index===1) {
+          //       $http.post(Urls.setBillOwner,{billId: invoice.data.bill.billId, clientId : AppIdentifier.getId()})
+          //          .then(function(){
+          //             showBill(true);
+          //          });
+          //     } else {
+          //       showBill(false);
+          //     }
+          //   });
+
         } else {
           showBill(false);
         }
