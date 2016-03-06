@@ -215,6 +215,10 @@ function ShareWithCtrl(SocketListeners, Urls, SocketFactory, $scope, $timeout, $
   var i=0;
   var users = [
     {
+     id: '+41789646592',
+     name: 'Konrad Van Damme',
+     image: 'img/karoly.png'
+    },{
      id: '+36304244773',
      name: 'Karoly Norris',
      image: 'img/karoly.png'
