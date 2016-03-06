@@ -217,7 +217,7 @@ function ShareWithCtrl(SocketListeners, Urls, SocketFactory, $scope, $timeout, $
     {
      id: '+41789646592',
      name: 'Konrad Van Damme',
-     image: 'img/karoly.png'
+     image: 'img/konrad.png'
     },{
      id: '+36304244773',
      name: 'Karoly Norris',
@@ -233,14 +233,18 @@ function ShareWithCtrl(SocketListeners, Urls, SocketFactory, $scope, $timeout, $
     }
   ];
 
-  var timeout = [1500, 2500,1000];
+  var timeout = [500, 2500,1000];
+
+  var usersAv = users.filter(function(u){
+    return u.id !== AppIdentifier.getId();
+  });
 
   $scope.users = [];
   $scope.loadingStart = true;
 
   function getUser(user) {
     $timeout(function(){
-      $scope.users.push(users[user]);
+      $scope.users.push(usersAv[user]);
       i++;
       if(i<3) {
         getUser(i);
