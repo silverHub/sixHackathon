@@ -20,7 +20,7 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
-  
+
 
   SocketFactory.on('sendBill', function(bill){
       if(bill.clientId === AppIdentifier.getId()){
@@ -83,8 +83,8 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 }
 
 
-DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal','SocketFactory','SocketListeners','AppIdentifier'];
-function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,SocketListeners,AppIdentifier) {
+DetailsCtrl.$inject=['$cordovaDialogs','$state', '$stateParams','$scope','$ionicModal','SocketFactory','SocketListeners','AppIdentifier'];
+function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,SocketFactory,SocketListeners,AppIdentifier) {
 
   $scope.invoice = $stateParams.bill;
   $scope.invoice.bill.billItems[1].quantity = 2;
@@ -158,6 +158,17 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,Soc
       })
     };
     SocketFactory.emit('payItems',data);
+    SocketFactory.on('payResp', function(respStatus){
+      if(respStatus === 'OK'){
+        // successfull pay, navigate away / empty consumption
+        $scope.consumption = [];
+        $scope.closeModal();
+        $cordovaDialogs.alert('Successfull pay!');
+      } else {
+        // pay not successfull, show alert
+        $cordovaDialogs.alert('Payment failed! :(');
+      }
+    });;
   }
 
   $scope.closeModal = function closeModal() {
@@ -178,7 +189,7 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,Soc
    $scope.modal.remove();
   });
 
-  
+
 }
 
 ShareWithCtrl.$inject=['SocketListeners','Urls','SocketFactory','$scope','$timeout', '$stateParams','$rootScope','AppIdentifier'];
