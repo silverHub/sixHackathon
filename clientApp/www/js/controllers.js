@@ -15,8 +15,8 @@ function HomeCtrl($scope, $interval) {
 
 }
 
-AppCtrl.$inject=['$cordovaDialogs', 'QRFactory','SocketFactory','Urls','AppIdentifier','$http','$scope', '$state', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification', '$ionicSideMenuDelegate'];
-function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier, $http, $scope, $state, $rootScope, $ionicPlatform, $cordovaLocalNotification, $ionicSideMenuDelegate) {
+AppCtrl.$inject=['$cordovaDialogs', 'QRFactory','SocketFactory','Urls','SocketListeners','AppIdentifier','$http','$scope', '$state', '$rootScope', '$ionicPlatform', '$cordovaLocalNotification', '$ionicSideMenuDelegate'];
+function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListeners, AppIdentifier, $http, $scope, $state, $rootScope, $ionicPlatform, $cordovaLocalNotification, $ionicSideMenuDelegate) {
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
@@ -52,7 +52,7 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
   $rootScope.renewState = function(invoice) {
     console.log('renew state');
     $scope.invoice = invoice.data;
-    showBill(AppIdentifier.getId() === invoice.data.bill.ownerId);
+    //showBill(AppIdentifier.getId() === invoice.data.bill.ownerId);
   };
 
   function processInvoice(invoice) {
