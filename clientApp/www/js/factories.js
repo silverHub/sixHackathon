@@ -82,8 +82,6 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
 
         var defer = $q.defer();
 
-        //$http.get('http://'+ips.backend+'/backend/getProviderInfo.json?providerId='+input)
-        // TODO add the mock json here
         $http.get(Urls.billUrl+'/'+input)
           .then(function(response){
               defer.resolve(response);
@@ -96,15 +94,15 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
     }
 
     function getQR(){
-      return getBillData('261616136624');
+      //return getBillData('261616136624');
 
-      //  return $cordovaBarcodeScanner.scan()
-    //         .then(function(qrdata) {
-    //           return getProviderData(qrdata.text);
-    //         })
-    //         .catch(function(err){
+       return $cordovaBarcodeScanner.scan()
+            .then(function(qrdata) {
+              return getBillData(qrdata.text);
+            })
+            .catch(function(err){
 
-    //         });
+            });
     }
 
   return {
