@@ -16,7 +16,7 @@
       <ion-item>
         <h2>Invoice <span class="fr">#{{invoice.bill.billId}}</span></h2>
       </ion-item>
-      <ion-item ng-repeat="item in invoice.bill.billItems track by $index" ng-class="{'inactive': item.quantity <= 0}" class="item" ng-click="getDetails()" click-for-options>
+      <ion-item ng-repeat="item in invoice.bill.billItems track by $index" ng-class="{'inactive': item.quantity - consumedQty[$index] <= 0}" class="item" ng-click="getDetails()" click-for-options>
         <div class="itemName">{{item.itemName}}</div>
         <div class="itemBox">
           <span class="itemQuantity">{{item.quantity - consumedQty[$index]}} x&nbsp;</span>
