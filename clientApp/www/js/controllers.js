@@ -20,8 +20,6 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
-
-
   SocketFactory.on('sendBill', function(bill){
       if(bill.clientId === AppIdentifier.getId()){
         $state.go('main.listDetail', {bill: bill});
@@ -50,6 +48,12 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
     $scope.invoice.isPrimary = isPrimary;
     $state.go('main.listDetail', {bill: $scope.invoice});
   }
+
+  $rootScope.renewState = function(invoice) {
+    console.log('renew state');
+    $scope.invoice = invoice.data;
+    showBill(AppIdentifier.getId() === invoice.data.bill.ownerId);
+  };
 
   function processInvoice(invoice) {
         $scope.invoice = invoice.data;
@@ -87,21 +91,21 @@ DetailsCtrl.$inject=['$cordovaDialogs','$state', '$stateParams','$scope','$ionic
 function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,SocketFactory,SocketListeners,AppIdentifier) {
 
   $scope.invoice = $stateParams.bill;
-  $scope.invoice.bill.billItems[1].quantity = 2;
-  $scope.invoice.bill.billItems[1].billPayments = [
-    {
-      "clientId": "+36304244773",
-      "quantity": 1
-    },
-    {
-      "clientId": "+36304244773",
-      "quantity": 2
-    },
-    {
-      "clientId": "+36704244773",
-      "quantity": 1
-    }
-  ];
+  // $scope.invoice.bill.billItems[1].quantity = 2;
+  // $scope.invoice.bill.billItems[1].billPayments = [
+  //   {
+  //     "clientId": "+36304244773",
+  //     "quantity": 1
+  //   },
+  //   {
+  //     "clientId": "+36304244773",
+  //     "quantity": 2
+  //   },
+  //   {
+  //     "clientId": "+36704244773",
+  //     "quantity": 1
+  //   }
+  // ];
 
   SocketListeners.setConsumedQty($scope.invoice.bill);
   $scope.consumedQty = SocketListeners.consumedQty;
@@ -136,6 +140,10 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
       }
     }
   }
+
+  $scope.getDetails = function() {
+    console.log('det');
+  };
 
 // MODAL
 

@@ -15,8 +15,8 @@ function Urls(ips) {
   };
 }
 
-SocketListeners.$inject=['SocketFactory'];
-function SocketListeners(SocketFactory) {
+SocketListeners.$inject=['SocketFactory','QRFactory','$rootScope'];
+function SocketListeners(SocketFactory, QRFactory, $rootScope) {
 
     var consumedQty = [];
 
@@ -28,13 +28,15 @@ function SocketListeners(SocketFactory) {
 
     function payItemsListener(bill) {
       SocketFactory.on('payItems', function(payedItems){
-          console.log(payedItems);
-          payedItems.items.map(function(item) {
-            console.log(bill,item);
-            var billItem = bill.billItems.contains(item);
-            billItem.quantity -= item.quantity;
-          });
-          setConsumedQty(bill);
+          // console.log(bill);
+          // payedItems.items.map(function(item) {
+          //   var billItem = bill.billItems.contains(item);
+          //   billItem.quantity -= item.quantity;
+          // });
+          QRFactory.getBillData(payedItems.billId).then(function(data){
+            setConsumedQty(data.data.bill);
+            $rootScope.renewState(data);
+          })
       });
     }
 
@@ -109,6 +111,7 @@ function QRFactory($cordovaBarcodeScanner, $log, $http, ips, $q, Urls) {
     }
 
   return {
-    getQR: getQR
+    getQR: getQR,
+    getBillData: getBillData
   }
 }

@@ -77,7 +77,7 @@ body .pane {
 }
 .itemForYou{
   float: left;
-  padding-right: 2px;
+  padding-right: 5px;
 }
 .itemBox {
   float: right;
@@ -86,6 +86,11 @@ body .pane {
 .added {
   clear: both;
   color: green;
+}
+
+.others {
+  clear: both;
+  color: orange;
 }
 
 .itemQuantity{

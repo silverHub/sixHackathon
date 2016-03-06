@@ -12,20 +12,20 @@
     </ion-nav-bar>
   <!-- do you want padding -->
   <ion-content class="">
-    <ion-list can-swipe="!invoice.isPrimary">
+    <ion-list>
       <ion-item>
         <h2>Invoice <span class="fr">#{{invoice.bill.billId}}</span></h2>
       </ion-item>
-      <ion-item ng-repeat="item in invoice.bill.billItems track by $index" ng-class="{'inactive': item.quantity <= 0}" class="item" click-for-options>
+      <ion-item ng-repeat="item in invoice.bill.billItems track by $index" ng-class="{'inactive': item.quantity <= 0}" class="item" ng-click="getDetails()" click-for-options>
         <div class="itemName">{{item.itemName}}</div>
         <div class="itemBox">
-          <span class="itemQuantity">{{item.quantity}} x&nbsp;</span>
+          <span class="itemQuantity">{{item.quantity - consumedQty[$index]}} x&nbsp;</span>
           <span class="itemPrice">{{item.price}} CHF :&nbsp;</span>
-          <span class="itemSum">{{item.price*item.quantity}} CHF</span>
+          <span class="itemSum">{{item.price*(item.quantity - consumedQty[$index])}} CHF</span>
         </div>
 
-        <div class="itemBox added" ng-if="invoice.isPrimary && consumedQty[$index]">
-        Others:
+        <div class="itemBox others" ng-if="invoice.isPrimary && consumedQty[$index]">
+          <span class="itemForYou">Others:&nbsp;</span>
           <span class="itemQuantity">{{consumedQty[$index]}} x&nbsp;</span>
           <span class="itemPrice">{{item.price}} CHF :&nbsp;</span>
           <span class="itemSum">{{item.price*consumedQty[$index]}} CHF</span>
@@ -39,7 +39,7 @@
         </div>
         
         <div class="detailbox" ng-show="item.opened">details</div>
-        <ion-option-button class="button-balanced icon ion-ios-plus-empty" ng-if="item.quantity > 0" ng-click="addToConsumption(item)"></ion-option-button>
+        <ion-option-button class="button-balanced icon ion-ios-plus-empty" ng-if="item.quantity > 0 && !invoice.isPrimary" ng-click="addToConsumption(item)"></ion-option-button>
       </ion-item>
     </ion-list>
 
