@@ -50,6 +50,12 @@ public class PaymentResponse {
 	public void setItems(List<PayBillItem> items) {
 		this.items = items;
 	}
+
+	@Override
+	public String toString() {
+		return "PaymentResponse [status=" + status + ", billId=" + billId
+				+ ", clientId=" + clientId + ", items=" + items + "]";
+	}
 	
 	
 

@@ -28,6 +28,7 @@ public class PayController {
 		PaymentResponse response;
 		try{
 			response = paymentManager.createPayment(request);
+			logger.info("Pay was successful: {}", response);
 		} catch (CreatePaymentException e) {
 			logger.error("Unexpected error occurred during setting bill owner", e);
 			response = new PaymentResponse();
