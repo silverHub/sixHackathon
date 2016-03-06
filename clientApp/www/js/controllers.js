@@ -24,14 +24,7 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
   SocketFactory.on('sendBill', function(bill){
     if(bill.clientId === AppIdentifier.getId()){
       $state.go('main.listDetail', {bill: bill});
-      console.log(bill);
-      // SocketFactory.on('payItems', function(payedItems){
-      //   console.log(payedItems);
-      //   payedItems.items.map(function(item) {
-      //     var billItem = bill.billItems.contains(item);
-      //     billItem.quantity -= item.quantity;
-      //   });
-      // });
+      $scope.invoice = bill;
       SocketListeners.payItemsListener(bill);
     }
   });

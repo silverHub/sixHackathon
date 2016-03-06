@@ -26,7 +26,7 @@ function SocketListeners(SocketFactory, QRFactory, $rootScope) {
       consumedQty: consumedQty
     };
 
-    function payItemsListener(bill) {
+    function payItemsListener() {
       SocketFactory.on('payItems', function(payedItems){
           // console.log(bill);
           // payedItems.items.map(function(item) {
