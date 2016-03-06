@@ -44,9 +44,8 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, SocketListener
 
   $rootScope.renewState = function(invoice) {
     $scope.invoice = invoice.data;
-      $scope.apply(function(){
-        SocketListeners.setConsumedQty(invoice.data.bill);
-      });
+    SocketListeners.setConsumedQty(invoice.data.bill);
+    
     console.log('renew state', invoice);
   };
 
@@ -101,9 +100,10 @@ function DetailsCtrl($cordovaDialogs,$state, $stateParams, $scope, $ionicModal,S
   //     "quantity": 1
   //   }
   // ];
-
   SocketListeners.setConsumedQty($scope.invoice.bill);
+  
   $scope.consumedQty = SocketListeners.consumedQty;
+  console.log('ctrl socetl',$scope.consumedQty);
 
   Array.prototype.contains = function findById(itemToFind) {
     var ids = this.map(function(item) {

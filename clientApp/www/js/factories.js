@@ -18,7 +18,7 @@ function Urls(ips) {
 SocketListeners.$inject=['SocketFactory','QRFactory','$rootScope'];
 function SocketListeners(SocketFactory, QRFactory, $rootScope) {
 
-    var consumedQty = [];
+    var consumedQty = [0,0,0];
 
     return {
       payItemsListener: payItemsListener,
@@ -36,13 +36,15 @@ function SocketListeners(SocketFactory, QRFactory, $rootScope) {
     }
 
     function setConsumedQty(bill){
-      bill.billItems.forEach(function(item){
+      console.log('bef',consumedQty);
+      bill.billItems.forEach(function(item,index){
         var qty = 0;
         item.billPayments.forEach(function(i){
             qty += i.quantity;
         });
-        consumedQty.push(qty);
+        consumedQty[index] = qty;
       });
+      console.log('aft',consumedQty);
     }
 }
 
