@@ -2,6 +2,7 @@
 
 angular.module('clientapp')
   .factory('SocketFactory', SocketFactory)
+  .factory('SocketListeners', SocketListeners)
   .factory('QRFactory', QRFactory)
   .factory('Urls', Urls);
 
@@ -14,6 +15,23 @@ function Urls(ips) {
   };
 }
 
+SocketListeners.$inject=['SocketFactory'];
+function SocketListeners(SocketFactory) {
+    return {
+      payItemsListener:payItemsListener
+    };
+
+    function payItemsListener(bill) {
+      SocketFactory.on('payItems', function(payedItems){
+          console.log(payedItems);
+          payedItems.items.map(function(item) {
+            console.log(bill,item);
+            var billItem = bill.billItems.contains(item);
+            billItem.quantity -= item.quantity;
+          });
+        });
+    }
+}
 
 SocketFactory.$inject=['$log','ips','$rootScope'];
 function SocketFactory($log,ips,$rootScope) {

@@ -20,6 +20,8 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
 
   $scope.paymit = '<img class="title-image" src="img/paymit-logo_sm.png" style="margin: 9px 0 0 15px;"/>';
 
+  
+
   SocketFactory.on('sendBill', function(bill){
       if(bill.clientId === AppIdentifier.getId()){
         $state.go('main.listDetail', {bill: bill});
@@ -31,6 +33,7 @@ function AppCtrl($cordovaDialogs, QRFactory, SocketFactory, Urls, AppIdentifier,
             billItem.quantity -= item.quantity;
           });
         });
+        SocketListeners.payItemsListener(bill);
       }
 
   });
@@ -84,6 +87,14 @@ DetailsCtrl.$inject=['$state', '$stateParams','$scope','$ionicModal','SocketFact
 function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,AppIdentifier) {
 
   $scope.invoice = $stateParams.bill;
+  console.log($scope.invoice);
+  // $scope.invoice.billItems[0].billPayments = [
+  //   {
+  //     "clientId": "+36304244773",
+  //     "quantity": 1
+  //   }
+  // ];
+
   Array.prototype.contains = function findById(itemToFind) {
     var ids = this.map(function(item) {
       return item.itemId;
@@ -96,6 +107,27 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,App
   }
   $scope.consumption = [];
 
+
+  $scope.shareIt = function() {
+    $state.go('main.sharewith',{bill: $scope.invoice});
+  };
+
+  $scope.addToConsumption = function addToConsumption(item) {
+    if(item.quantity > 0){
+      var match = $scope.consumption.contains(item);
+      item.quantity--;
+      if(match){
+        match.quantity++;
+      } else {
+        var consumedItem = JSON.parse(JSON.stringify(item));
+        consumedItem.quantity = 1;
+        $scope.consumption.push(consumedItem);
+      }
+    }
+  }
+
+// MODAL
+
   $ionicModal.fromTemplateUrl('templates/consumptionModal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -103,14 +135,6 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,App
     $scope.modal = modal;
   });
 
-  $scope.shareIt = function() {
-    $state.go('main.sharewith',{bill: $scope.invoice});
-  };
-
-  $scope.reset = function reset() {
-    console.log('reset');
-    $scope.consumption = [];
-  }
   $scope.openModal = function openModal() {
     $scope.modal.show();
   }
@@ -124,6 +148,7 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,App
     };
     SocketFactory.emit('payItems',data);
   }
+
   $scope.closeModal = function closeModal() {
     $scope.modal.hide();
   }
@@ -142,23 +167,11 @@ function DetailsCtrl($state, $stateParams, $scope, $ionicModal,SocketFactory,App
    $scope.modal.remove();
   });
 
-  $scope.addToConsumption = function addToConsumption(item) {
-    if(item.quantity > 0){
-      var match = $scope.consumption.contains(item);
-      item.quantity--;
-      if(match){
-        match.quantity++;
-      } else {
-        var consumedItem = JSON.parse(JSON.stringify(item));
-        consumedItem.quantity = 1;
-        $scope.consumption.push(consumedItem);
-      }
-  }
-  }
+  
 }
 
-ShareWithCtrl.$inject=['Urls','SocketFactory','$scope','$timeout', '$stateParams','$rootScope','AppIdentifier'];
-function ShareWithCtrl(Urls, SocketFactory, $scope, $timeout, $stateParams, $rootScope, AppIdentifier) {
+ShareWithCtrl.$inject=['SocketListeners','Urls','SocketFactory','$scope','$timeout', '$stateParams','$rootScope','AppIdentifier'];
+function ShareWithCtrl(SocketListeners, Urls, SocketFactory, $scope, $timeout, $stateParams, $rootScope, AppIdentifier) {
 
   $rootScope.homescreen = false;
   $rootScope.listscreen = false;
@@ -167,17 +180,19 @@ function ShareWithCtrl(Urls, SocketFactory, $scope, $timeout, $stateParams, $roo
   // Magic happens here but now its just mock
   $scope.navTitle='<img class="title-image" src="img/shareit_sm.png" style="margin-top: 7px;"/>';
   $scope.invoice = $stateParams.bill;
+
   $scope.shareWith = function(id) {
-    console.log($stateParams.bill);
-    SocketFactory.emit('shareBillWithUser',{billId: $scope.invoice.bill.billId, clientId: AppIdentifier.getId()} , function(){
-      showBill(true)
-    });
+      SocketFactory.emit('shareBillWithUser',{billId: $scope.invoice.bill.billId, clientId: id} , function(){
+        console.log(id);
+        //TODO: why not runs here
+      });
+      SocketListeners.payItemsListener($scope.invoice.bill);
   };
 
   var i=0;
   var users = [
     {
-     id: '+41791234567',
+     id: '+36304244773',
      name: 'Karoly Norris',
      image: 'img/karoly.png'
     },{
